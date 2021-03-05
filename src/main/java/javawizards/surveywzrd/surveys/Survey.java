@@ -14,11 +14,11 @@ public class Survey {
 
     @Column(name= "description")
     private String description;
-    @Column(name= "expiryDate")
+    @Column(name= "expiry_date")
     private String expiryDate;
     @Column(name= "question")
     private String question;
-    @Column(name= "multiSelect")
+    @Column(name= "multi_select")
     private boolean multiSelect;
 
     public Survey() {
