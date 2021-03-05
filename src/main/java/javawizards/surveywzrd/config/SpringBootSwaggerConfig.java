@@ -4,8 +4,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+
+import java.util.Collections;
 
 @Configuration
 public class SpringBootSwaggerConfig {
@@ -15,6 +20,23 @@ public class SpringBootSwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .apiInfo(getApiInformation())
+                .securitySchemes(Collections.singletonList(apiKey()));
     }
+    private ApiInfo getApiInformation() {
+        return new ApiInfo("SurveyWzrd",
+                "SurveyWzrd Backend Developed by Kathrin und Daniel, Tests by Mauritz",
+                "1.0",
+                "",
+                new Contact("", "", ""),
+                "API License",
+                "API License URL",
+                Collections.emptyList()
+        );
+    }
+    private ApiKey apiKey() {
+        return new ApiKey("Authorization", "x-api-key", "header");
+    }
+
 }

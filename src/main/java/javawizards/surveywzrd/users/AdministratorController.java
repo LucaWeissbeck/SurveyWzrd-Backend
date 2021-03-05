@@ -44,7 +44,7 @@ public class AdministratorController {
                     administrator1.setFirstName(administrator.getFirstName());
                     administrator1.setLastName(administrator.getLastName());
                     administrator1.setEmail(administrator.getEmail());
-                    administrator1.setPw(administrator.getPw());
+                    administrator1.setPassword(administrator.getPassword());
                     return administratorRepository.save(administrator1);
                 })
                 .orElseGet(() -> {
