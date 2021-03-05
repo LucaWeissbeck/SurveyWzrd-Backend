@@ -1,25 +1,36 @@
 package javawizards.surveywzrd.surveys;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javawizards.surveywzrd.users.Administrator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name="surveys")
+@Table(name = "surveys")
 public class Survey {
-    @Id@GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @Column(name= "name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name= "description")
+    @Column(name = "description")
     private String description;
-    @Column(name= "expiry_date")
+    @Column(name = "expiry_date")
     private String expiryDate;
-    @Column(name= "question")
+    @Column(name = "question")
     private String question;
-    @Column(name= "multi_select")
+    @Column(name = "multi_select")
     private boolean multiSelect;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "administrator_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Administrator administrator;
 
     public Survey() {
 
@@ -35,6 +46,13 @@ public class Survey {
         this.multiSelect = multiSelect;
     }
 
+    public Administrator getAdministrator() {
+        return administrator;
+    }
+
+    public void setAdministrator(Administrator administrator) {
+        this.administrator = administrator;
+    }
 
     public Long getId() {
         return id;
