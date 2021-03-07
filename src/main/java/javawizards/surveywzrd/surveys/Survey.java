@@ -28,7 +28,7 @@ public class Survey {
     private boolean multiSelect;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "administrator_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Administrator administrator;
 
