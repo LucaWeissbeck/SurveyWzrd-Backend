@@ -30,5 +30,18 @@ public class AnswerOptionController {
         }).orElseThrow(() -> new ResourceNotFoundException("SurveyID " + surveyID + " not found"));
 
     }
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deleteAnswerOption(@PathVariable Long id) {
+        answerOptionRepository.deleteById(id);
+
+    }
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public AnswerOption updateAnswerOption(@RequestBody AnswerOption answerOption, @PathVariable Long id) {
+        return answerOptionRepository.findById(id).map(answerOption1 -> {
+            answerOption1.setValue(answerOption.getValue());
+            return answerOptionRepository.save(answerOption1);
+        }).orElseThrow(() -> new ResourceNotFoundException("AnswerOptionID " + id + "not found"));
+
+    }
 
 }
