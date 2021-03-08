@@ -1,12 +1,12 @@
 package javawizards.surveywzrd.surveys;
 
+import javawizards.surveywzrd.exceptions.ResourceNotFoundException;
+import javawizards.surveywzrd.users.Administrator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping(path="/survey/answeroptions")
@@ -19,9 +19,29 @@ public class AnswerOptionController {
     private AnswerOptionRepository answerOptionRepository;
 
     @GetMapping("/{surveyID}/")
-    public Page<AnswerOption> getAllAnswerOptionsBySurveyID(@PathVariable(value = "surveyID") Long surveyID,
-                                                             Pageable pageable) {
-        //return null;
-        return answerOptionRepository.findBySurvey_id(surveyID, pageable);
+    public List<AnswerOption> getAllAnswerOptionsBySurveyID(@PathVariable(value = "surveyID") Long surveyID) {
+        return answerOptionRepository.findBySurvey_id(surveyID);
     }
+    @RequestMapping(value = "/{surveyID}/", method = RequestMethod.POST)
+    public AnswerOption addAnswerOption(@PathVariable(value = "surveyID") Long surveyID, @RequestBody AnswerOption answerOption) {
+        return surveyRepository.findById(surveyID).map(survey -> {
+            answerOption.setSurvey(survey);
+            return answerOptionRepository.save(answerOption);
+        }).orElseThrow(() -> new ResourceNotFoundException("SurveyID " + surveyID + " not found"));
+
+    }
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deleteAnswerOption(@PathVariable Long id) {
+        answerOptionRepository.deleteById(id);
+
+    }
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public AnswerOption updateAnswerOption(@RequestBody AnswerOption answerOption, @PathVariable Long id) {
+        return answerOptionRepository.findById(id).map(answerOption1 -> {
+            answerOption1.setValue(answerOption.getValue());
+            return answerOptionRepository.save(answerOption1);
+        }).orElseThrow(() -> new ResourceNotFoundException("AnswerOptionID " + id + "not found"));
+
+    }
+
 }
