@@ -27,10 +27,10 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
-   /* @Override
+    @Override
     public void configure(final WebSecurity webSecurity) {
-        webSecurity.ignoring().antMatchers("/token/**");
-    }*/
+        webSecurity.ignoring().antMatchers("/survey/pub/**");
+    }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -49,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             }
         });
         httpSecurity.
-                antMatcher("/sec/**").
+                antMatcher("/**").
                 csrf().disable().
                 sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                 and().addFilter(filter).authorizeRequests().anyRequest().authenticated();

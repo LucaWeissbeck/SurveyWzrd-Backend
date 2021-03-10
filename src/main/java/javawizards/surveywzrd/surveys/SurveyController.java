@@ -23,7 +23,7 @@ public class SurveyController {
 
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/public/{id}", method = RequestMethod.GET)
     public Survey getSurvey(@PathVariable Long id) {
         return surveyRepository.findById(id)
                 .orElseThrow(() -> new NullPointerException(id.toString())); //SurveyNotFoundException(id));

@@ -1,5 +1,6 @@
 package javawizards.surveywzrd.users;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Repository;
