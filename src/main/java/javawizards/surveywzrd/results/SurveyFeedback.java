@@ -9,8 +9,6 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
-/* TODO: Survey als Column wirklich nötig? */
-
 @Entity
 @Table(name = "survey_feedback")
 public class SurveyFeedback {
@@ -21,12 +19,6 @@ public class SurveyFeedback {
 
     @Column(name = "timestamp")
     private String timestamp;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "survey_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private Survey survey;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "answer_option_id", nullable = false)
@@ -43,10 +35,9 @@ public class SurveyFeedback {
     public SurveyFeedback() {
     }
 
-    public SurveyFeedback(Long id, String timestamp, Survey survey, AnswerOption answerOption, Participant participant) {
+    public SurveyFeedback(Long id, String timestamp, AnswerOption answerOption, Participant participant) {
         this.id = id;
         this.timestamp = timestamp;
-        this.survey = survey;
         this.answerOption = answerOption;
         this.participant = participant;
     }
@@ -65,14 +56,6 @@ public class SurveyFeedback {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public Survey getSurvey() {
-        return survey;
-    }
-
-    public void setSurvey(Survey survey) {
-        this.survey = survey;
     }
 
     public AnswerOption getAnswerOption() {
@@ -96,7 +79,6 @@ public class SurveyFeedback {
         return "SurveyFeedback{" +
                 "id=" + id +
                 ", timestamp='" + timestamp + '\'' +
-                ", survey=" + survey +
                 ", answerOption=" + answerOption +
                 ", participant=" + participant +
                 '}';

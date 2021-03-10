@@ -40,7 +40,6 @@ public class SurveyFeedbackController {
     public SurveyFeedback updateSurveyFeedback(@RequestBody SurveyFeedback surveyFeedback, @PathVariable Long id) {
         return surveyFeedbackRepository.findById(id)
                 .map(surveyFeedback1 -> {
-                    surveyFeedback1.setSurvey(surveyFeedback.getSurvey());
                     surveyFeedback1.setAnswerOption(surveyFeedback.getAnswerOption());
                     surveyFeedback1.setParticipant(surveyFeedback.getParticipant());
                     surveyFeedback1.setTimestamp(surveyFeedback.getTimestamp());

@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface SurveyFeedbackRepository extends CrudRepository<SurveyFeedback, Long> {
     SurveyFeedback findById(long id);
-    List<SurveyFeedback> findBySurvey_Id(long id);
 }
