@@ -27,6 +27,12 @@ public class SurveyFeedback {
     private AnswerOption answerOption;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "survey_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Survey survey;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "participant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
@@ -35,10 +41,11 @@ public class SurveyFeedback {
     public SurveyFeedback() {
     }
 
-    public SurveyFeedback(Long id, String timestamp, AnswerOption answerOption, Participant participant) {
+    public SurveyFeedback(Long id, String timestamp, AnswerOption answerOption, Survey survey, Participant participant) {
         this.id = id;
         this.timestamp = timestamp;
         this.answerOption = answerOption;
+        this.survey = survey;
         this.participant = participant;
     }
 
@@ -66,6 +73,14 @@ public class SurveyFeedback {
         this.answerOption = answerOption;
     }
 
+    public Survey getSurvey() {
+        return survey;
+    }
+
+    public void setSurvey(Survey survey) {
+        this.survey = survey;
+    }
+
     public Participant getParticipant() {
         return participant;
     }
@@ -80,6 +95,7 @@ public class SurveyFeedback {
                 "id=" + id +
                 ", timestamp='" + timestamp + '\'' +
                 ", answerOption=" + answerOption +
+                ", survey=" + survey +
                 ", participant=" + participant +
                 '}';
     }

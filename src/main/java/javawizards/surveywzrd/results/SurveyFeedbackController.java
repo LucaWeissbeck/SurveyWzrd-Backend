@@ -23,6 +23,12 @@ public class SurveyFeedbackController {
 
     }
 
+    @RequestMapping(value = "/{survey_id}", method = RequestMethod.GET)
+    public ResponseEntity<List<SurveyFeedback>> getSurveyFeedbacksForSurvey(@PathVariable Long survey_id) {
+        return new ResponseEntity<>(surveyFeedbackRepository.findBySurvey_Id(survey_id), HttpStatus.OK);
+
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public SurveyFeedback getSurveyFeedback(@PathVariable Long id) {
         return surveyFeedbackRepository.findById(id)
