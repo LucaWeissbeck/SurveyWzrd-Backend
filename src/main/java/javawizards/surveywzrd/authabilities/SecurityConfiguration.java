@@ -26,10 +26,18 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private static final String[] AUTH_WHITELIST = {
+
+            // -- swagger ui
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/v2/api-docs",
+            "/webjars/**"
+    };
 
     @Override
     public void configure(final WebSecurity webSecurity) {
-        webSecurity.ignoring().antMatchers("/survey/pub/**");
+        webSecurity.ignoring().antMatchers("/survey/pub/**").antMatchers(AUTH_WHITELIST);
     }
 
     @Override
