@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.parameters.P;
 
+import java.lang.reflect.Field;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParticipantTest {
@@ -21,42 +23,142 @@ class ParticipantTest {
     }
 
     @Test
-    void getId() {
+    void getId() throws NoSuchFieldException, IllegalAccessException {
+        //given
+        final Participant pojo = new Participant();
+        final Field field = pojo.getClass().getDeclaredField("id");
+        field.setAccessible(true);
+        field.set(pojo, 123l);
+
+        //when
+        final Long result = pojo.getId();
+
+        //then
+        assertEquals(123l, result, "magic_values");
     }
 
     @Test
-    void setId() {
+    void setId() throws NoSuchFieldException, IllegalAccessException {
+        final Participant pojo = new Participant();
+
+        //when
+        pojo.setId(123l);
+
+        //then
+        final Field field = pojo.getClass().getDeclaredField("id");
+        field.setAccessible(true);
+        assertEquals(123l, field.get(pojo), "foo");
     }
 
     @Test
-    void getCookie_id() {
+    void getCookie_id() throws NoSuchFieldException, IllegalAccessException {
+        //given
+        final Participant pojo = new Participant();
+        final Field field = pojo.getClass().getDeclaredField("cookie_id");
+        field.setAccessible(true);
+        field.set(pojo, "test");
+
+        //when
+        final String result = pojo.getCookie_id();
+
+        //then
+        assertEquals("test", result, "magic_values");
     }
 
     @Test
-    void setCookie_id() {
+    void setCookie_id() throws NoSuchFieldException, IllegalAccessException {
+        final Participant pojo = new Participant();
+
+        //when
+        pojo.setCookie_id("test");
+
+        //then
+        final Field field = pojo.getClass().getDeclaredField("cookie_id");
+        field.setAccessible(true);
+        assertEquals("test", field.get(pojo), "foo");
     }
 
     @Test
-    void getOs() {
+    void getOs() throws NoSuchFieldException, IllegalAccessException {
+        //given
+        final Participant pojo = new Participant();
+        final Field field = pojo.getClass().getDeclaredField("os");
+        field.setAccessible(true);
+        field.set(pojo, "test");
+
+        //when
+        final String result = pojo.getOs();
+
+        //then
+        assertEquals("test", result, "magic_values");
     }
 
     @Test
-    void setOs() {
+    void setOs() throws NoSuchFieldException, IllegalAccessException {
+        final Participant pojo = new Participant();
+
+        //when
+        pojo.setOs("test");
+
+        //then
+        final Field field = pojo.getClass().getDeclaredField("os");
+        field.setAccessible(true);
+        assertEquals("test", field.get(pojo), "foo");
     }
 
     @Test
-    void getBrowser_language() {
+    void getBrowser_language() throws NoSuchFieldException, IllegalAccessException {
+        //given
+        final Participant pojo = new Participant();
+        final Field field = pojo.getClass().getDeclaredField("browser_language");
+        field.setAccessible(true);
+        field.set(pojo, "test");
+
+        //when
+        final String result = pojo.getBrowser_language();
+
+        //then
+        assertEquals("test", result, "magic_values");
     }
 
     @Test
-    void setBrowser_language() {
+    void setBrowser_language() throws NoSuchFieldException, IllegalAccessException {
+        final Participant pojo = new Participant();
+
+        //when
+        pojo.setBrowser_language("test");
+
+        //then
+        final Field field = pojo.getClass().getDeclaredField("browser_language");
+        field.setAccessible(true);
+        assertEquals("test", field.get(pojo), "foo");
     }
 
     @Test
-    void getLocation() {
+    void getLocation() throws NoSuchFieldException, IllegalAccessException {
+        //given
+        final Participant pojo = new Participant();
+        final Field field = pojo.getClass().getDeclaredField("location");
+        field.setAccessible(true);
+        field.set(pojo, "test");
+
+        //when
+        final String result = pojo.getLocation();
+
+        //then
+        assertEquals("test", result, "magic_values");
     }
 
     @Test
-    void setLocation() {
+    void setLocation() throws NoSuchFieldException, IllegalAccessException {
+        final Participant pojo = new Participant();
+
+        //when
+        pojo.setLocation("test");
+
+        //then
+        final Field field = pojo.getClass().getDeclaredField("location");
+        field.setAccessible(true);
+        assertEquals("test", field.get(pojo), "foo");
     }
 }
