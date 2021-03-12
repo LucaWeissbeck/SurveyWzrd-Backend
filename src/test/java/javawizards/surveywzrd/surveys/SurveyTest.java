@@ -8,8 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SurveyTest {
 
+    private SurveyTest surveytest;
+
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception{
+        surveytest = new SurveyTest();
     }
 
     @AfterEach

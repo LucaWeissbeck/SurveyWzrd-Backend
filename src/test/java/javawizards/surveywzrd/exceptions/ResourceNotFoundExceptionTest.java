@@ -7,8 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ResourceNotFoundExceptionTest {
 
+    private ResourceNotFoundException resourcenotfoundexception;
+
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
+        resourcenotfoundexception = new ResourceNotFoundException();
     }
 
     @AfterEach

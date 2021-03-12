@@ -8,8 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ParticipantControllerTest {
 
+    private ParticipantController participantcontroller;
+
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception{
+     //   participantcontroller = new ParticipantController();
     }
 
     @AfterEach

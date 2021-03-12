@@ -6,8 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AnswerOptionTest {
 
+    private AnswerOption answeroption;
     @Test
-    void getId() {
+    void getId() throws Exception{
+        answeroption = new AnswerOption();
     }
 
     @Test

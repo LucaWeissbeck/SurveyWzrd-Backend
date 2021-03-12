@@ -8,8 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AdministratorTest {
 
+    private Administrator administrator;
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception{
+        administrator = new Administrator();
     }
 
     @AfterEach

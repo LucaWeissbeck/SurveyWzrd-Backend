@@ -7,8 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AuthTokenTest {
 
+    private AuthToken authtoken;
+
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception{
+        authtoken = new AuthToken();
     }
 
     @AfterEach

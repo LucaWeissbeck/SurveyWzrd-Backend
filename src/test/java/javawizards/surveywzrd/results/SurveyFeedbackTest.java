@@ -8,8 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SurveyFeedbackTest {
 
+    private SurveyFeedback surveyfeedback;
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
+        surveyfeedback = new SurveyFeedback();
     }
 
     @AfterEach

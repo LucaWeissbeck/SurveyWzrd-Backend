@@ -8,8 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AnswerOptionRepositoryTest {
 
+    private AnswerOptionController answeroptioncontroller;
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception{
+        answeroptioncontroller = new AnswerOptionController();
     }
 
     @AfterEach
