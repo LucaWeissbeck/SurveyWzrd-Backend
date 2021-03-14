@@ -1,20 +1,28 @@
 package javawizards.surveywzrd.surveys;
 
+import javawizards.surveywzrd.users.Administrator;
+import javawizards.surveywzrd.users.AdministratorRepository;
+import javawizards.surveywzrd.users.AuthTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/survey")
 public class SurveyController {
     private SurveyRepository surveyRepository;
+    private AdministratorRepository administratorRepository;
+    private AuthTokenRepository authTokenRepository;
 
     @Autowired
-    public SurveyController(SurveyRepository surveyRepository) {
+    public SurveyController(SurveyRepository surveyRepository, AdministratorRepository administratorRepository, AuthTokenRepository authTokenRepository) {
         this.surveyRepository = surveyRepository;
+        this.administratorRepository = administratorRepository;
+        this.authTokenRepository = authTokenRepository;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -31,7 +39,9 @@ public class SurveyController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Survey addSurvey(@RequestBody Survey survey) {
+    public Survey addSurvey(@RequestBody Survey survey, @RequestHeader Map<String, String> headers) {
+        Administrator administrator = administratorRepository.findById(authTokenRepository.findByauthKey(headers.get("x-api-key")).get().getAdmin().getId()).get();
+        survey.setAdministrator(administrator);
         return surveyRepository.save(survey);
 
     }

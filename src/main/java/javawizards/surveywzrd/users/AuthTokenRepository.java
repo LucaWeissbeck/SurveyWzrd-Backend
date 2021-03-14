@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 @Repository
 public interface AuthTokenRepository extends CrudRepository<AuthToken, Long> {
-    //AuthToken findByauth_key(String auth_key);
+    Optional<AuthToken> findByauthKey(String auth_key);
+
 
 }

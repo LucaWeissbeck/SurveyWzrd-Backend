@@ -13,11 +13,28 @@ public class AuthToken {
 
     @Column(name = "auth_key")
     @Id
-    private String auth_key;
+    private String authKey;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "administrator_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Administrator admin;
+
+
+    public String getAuthKey() {
+        return authKey;
+    }
+
+    public void setAuthKey(String authKey) {
+        this.authKey = authKey;
+    }
+
+    public Administrator getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Administrator admin) {
+        this.admin = admin;
+    }
 }

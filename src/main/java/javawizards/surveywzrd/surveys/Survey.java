@@ -2,6 +2,7 @@ package javawizards.surveywzrd.surveys;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javawizards.surveywzrd.users.Administrator;
+import javawizards.surveywzrd.users.AdministratorRepository;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -33,7 +34,6 @@ public class Survey {
     private Administrator administrator;
 
     public Survey() {
-
     }
 
     public Survey
