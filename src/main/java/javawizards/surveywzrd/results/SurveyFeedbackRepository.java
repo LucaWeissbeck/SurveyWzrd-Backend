@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface SurveyFeedbackRepository extends CrudRepository<SurveyFeedback, Long> {
-    List <SurveyFeedback> findBySurvey_Id(long survey_id);
+    List <SurveyFeedback> findAllBySurvey_Id(long survey_id);
     SurveyFeedback findById(long id);
 }

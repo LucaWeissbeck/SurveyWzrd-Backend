@@ -57,20 +57,25 @@ public class SurveyController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Survey updateSurvey(@RequestBody Survey survey, @PathVariable Long id) {
-        return surveyRepository.findById(id)
-                .map(survey1 -> {
-                    survey1.setName(survey.getName());
-                    survey1.setDescription(survey.getDescription());
-                    survey1.setExpiryDate(survey.getExpiryDate());
-                    survey1.setQuestion(survey.getQuestion());
-                    survey1.setMultiSelect(survey.isMultiSelect());
-                    return surveyRepository.save(survey1);
-                })
-                .orElseGet(() -> {
-                    survey.setId(id);
-                    return surveyRepository.save(survey);
-                });
+    public Survey updateSurvey(@RequestBody Survey survey, @PathVariable Long id, @RequestHeader Map<String, String> headers) {
+        Administrator administrator = administratorRepository.findById(authTokenRepository.findByauthKey(headers.get("x-api-key")).get().getAdmin().getId()).get();
+        Optional<Survey> surveyscope = surveyRepository.findById(id);
+        if (surveyscope.isPresent()) {
+            if (!(surveyscope.get().getAdministrator().getId() == administrator.getId())) throw new ForbiddenException("The requesting admin has no permissions for this entity.");
+
+            surveyRepository.findById(id)
+                    .map(survey1 -> {
+                        survey1.setName(survey.getName());
+                        survey1.setDescription(survey.getDescription());
+                        survey1.setExpiryDate(survey.getExpiryDate());
+                        survey1.setQuestion(survey.getQuestion());
+                        survey1.setMultiSelect(survey.isMultiSelect());
+                        return surveyRepository.save(survey1);
+                    });
+        }
+
+        survey.setId(id);
+        return surveyRepository.save(survey);
 
     }
 

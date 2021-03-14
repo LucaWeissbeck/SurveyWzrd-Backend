@@ -70,7 +70,7 @@ class SurveyFeedbackRepositoryTest {
             }
 
             @Override
-            public List<SurveyFeedback> findBySurvey_Id(long survey_id) {
+            public List<SurveyFeedback> findAllBySurvey_Id(long survey_id) {
                 return null;
             }
 

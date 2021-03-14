@@ -65,23 +65,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         APIKeyAuthFilter filter = new APIKeyAuthFilter("x-api-key");
-        filter.setAuthenticationManager(new AuthenticationManager() {
+        filter.setAuthenticationManager(authentication -> {
+            
 
-            @Override
-            public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-                String auth_token_request = (String) authentication.getPrincipal();
-                Optional<AuthToken> tolookfor = authTokenRepository.findByauthKey(auth_token_request);
-                if (!tolookfor.isPresent()){
-                    throw new BadCredentialsException("The API key was not found or not the expected value.");
-                }
-                //Debugging:
-                /*AuthToken authToken = tolookfor.get();
-                Optional<Administrator> administrator = administratorRepository.findById(authToken.getAdmin().getId());
-                System.out.println(administrator.get().getEmail());*/
-
-                authentication.setAuthenticated(true);
-                return authentication;
+            String auth_token_request = (String) authentication.getPrincipal();
+            Optional<AuthToken> tolookfor = authTokenRepository.findByauthKey(auth_token_request);
+            if (!tolookfor.isPresent()){
+                throw new BadCredentialsException("The API key was not found or not the expected value.");
             }
+            //Debugging:
+            /*AuthToken authToken = tolookfor.get();
+            Optional<Administrator> administrator = administratorRepository.findById(authToken.getAdmin().getId());
+            System.out.println(administrator.get().getEmail());*/
+
+            authentication.setAuthenticated(true);
+            return authentication;
         });
         httpSecurity.
                 antMatcher("/**").
