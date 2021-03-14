@@ -18,7 +18,7 @@ public class AnswerOptionController {
     @Autowired
     private AnswerOptionRepository answerOptionRepository;
 
-    @GetMapping("/{surveyID}/")
+    @GetMapping("/public/{surveyID}/")
     public List<AnswerOption> getAllAnswerOptionsBySurveyID(@PathVariable(value = "surveyID") Long surveyID) {
         return answerOptionRepository.findBySurvey_id(surveyID);
     }

@@ -49,12 +49,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/swagger-resources/**",
             "/swagger-ui/**",
             "/v2/api-docs",
-            "/webjars/**"
+            "/webjars/**",
+            //public routes
+            "/survey/public/**",
+            "/survey/answeroptions/public/**"
+
+
     };
 
     @Override
     public void configure(final WebSecurity webSecurity) {
-        webSecurity.ignoring().antMatchers("/survey/public/**").antMatchers(AUTH_WHITELIST);
+        webSecurity.ignoring().antMatchers(AUTH_WHITELIST);
     }
 
     @Override
