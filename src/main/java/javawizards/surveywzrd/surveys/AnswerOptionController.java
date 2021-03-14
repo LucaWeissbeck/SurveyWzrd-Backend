@@ -15,11 +15,12 @@ public class AnswerOptionController {
     @Autowired
     private AnswerOptionRepository answerOptionRepository;
 
-    @GetMapping("/public/{surveyID}/")
+    @GetMapping("/public/{surveyID}")
     public List<AnswerOption> getAllAnswerOptionsBySurveyID(@PathVariable(value = "surveyID") Long surveyID) {
+        System.out.println(surveyID);
         return answerOptionRepository.findAllBySurvey_id(surveyID);
     }
-    @RequestMapping(value = "/{surveyID}/", method = RequestMethod.POST)
+    @RequestMapping(value = "/{surveyID}", method = RequestMethod.POST)
     public AnswerOption addAnswerOption(@PathVariable(value = "surveyID") Long surveyID, @RequestBody AnswerOption answerOption) {
         return surveyRepository.findById(surveyID).map(survey -> {
             answerOption.setSurvey(survey);
