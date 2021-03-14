@@ -1,5 +1,7 @@
 package javawizards.surveywzrd.surveys;
 
+import javawizards.surveywzrd.exceptions.ForbiddenException;
+import javawizards.surveywzrd.exceptions.ResourceNotFoundException;
 import javawizards.surveywzrd.users.Administrator;
 import javawizards.surveywzrd.users.AdministratorRepository;
 import javawizards.surveywzrd.users.AuthTokenRepository;
@@ -7,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/survey")
@@ -25,9 +29,15 @@ public class SurveyController {
         this.authTokenRepository = authTokenRepository;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/getAll/", method = RequestMethod.GET)
     public ResponseEntity<List<Survey>> getAllSurveys() {
         return new ResponseEntity<>((List<Survey>) surveyRepository.findAll(), HttpStatus.OK);
+
+    }
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ResponseEntity<List<Survey>> getAllSurveysByAdministrator(@RequestHeader Map<String, String> headers) {
+        Administrator administrator = administratorRepository.findById(authTokenRepository.findByauthKey(headers.get("x-api-key")).get().getAdmin().getId()).get();
+        return new ResponseEntity<>(surveyRepository.findAllByAdministrator_Id(administrator.getId()), HttpStatus.OK);
 
     }
 
@@ -65,7 +75,11 @@ public class SurveyController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteSurvey(@PathVariable Long id) {
+    public void deleteSurvey(@PathVariable Long id, @RequestHeader Map<String, String> headers) {
+        Administrator administrator = administratorRepository.findById(authTokenRepository.findByauthKey(headers.get("x-api-key")).get().getAdmin().getId()).get();
+        Optional<Survey> survey = surveyRepository.findById(id);
+        if (!survey.isPresent()) throw new ResourceNotFoundException();
+        if (!(survey.get().getAdministrator().getId() == administrator.getId())) throw new ForbiddenException("The requesting admin has no permissions for this entity.");
         surveyRepository.deleteById(id);
 
     }
