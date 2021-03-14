@@ -16,7 +16,7 @@ class SurveyRepositoryTest {
     void setUp() throws Exception{
         surveyrepository = new SurveyRepository() {
             @Override
-            public List<Survey> findByAdministrator_Id(Long id) {
+            public List<Survey> findAllByAdministrator_Id(Long id) {
                 return null;
             }
 
