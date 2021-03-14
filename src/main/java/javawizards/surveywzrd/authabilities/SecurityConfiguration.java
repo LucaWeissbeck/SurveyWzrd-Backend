@@ -54,7 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(final WebSecurity webSecurity) {
-        webSecurity.ignoring().antMatchers("/survey/pub/**").antMatchers(AUTH_WHITELIST);
+        webSecurity.ignoring().antMatchers("/survey/public/**").antMatchers(AUTH_WHITELIST);
     }
 
     @Override

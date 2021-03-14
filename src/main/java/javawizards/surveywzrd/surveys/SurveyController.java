@@ -29,11 +29,11 @@ public class SurveyController {
         this.authTokenRepository = authTokenRepository;
     }
 
-    @RequestMapping(value = "/getAll/", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/getAll/", method = RequestMethod.GET)
     public ResponseEntity<List<Survey>> getAllSurveys() {
         return new ResponseEntity<>((List<Survey>) surveyRepository.findAll(), HttpStatus.OK);
 
-    }
+    }*/
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<List<Survey>> getAllSurveysByAdministrator(@RequestHeader Map<String, String> headers) {
         Administrator administrator = administratorRepository.findById(authTokenRepository.findByauthKey(headers.get("x-api-key")).get().getAdmin().getId()).get();
