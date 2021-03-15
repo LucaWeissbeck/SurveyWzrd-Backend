@@ -3,6 +3,7 @@ package javawizards.surveywzrd.results;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javawizards.surveywzrd.surveys.AnswerOptionRepository;
 import javawizards.surveywzrd.surveys.SurveyRepository;
+import javawizards.surveywzrd.users.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +16,15 @@ import java.util.List;
 public class SurveyFeedbackController {
     private final SurveyFeedbackRepository surveyFeedbackRepository;
     private AnswerOptionRepository answerOptionRepository;
+    private SurveyRepository surveyRepository;
+    private ParticipantRepository participantRepository;
 
     @Autowired
-    public SurveyFeedbackController(SurveyFeedbackRepository surveyFeedbackRepository, AnswerOptionRepository answerOptionRepository) {
+    public SurveyFeedbackController(SurveyFeedbackRepository surveyFeedbackRepository, AnswerOptionRepository answerOptionRepository, SurveyRepository surveyRepository, ParticipantRepository participantRepository) {
         this.surveyFeedbackRepository = surveyFeedbackRepository;
         this.answerOptionRepository = answerOptionRepository;
+        this.surveyRepository = surveyRepository;
+        this.participantRepository = participantRepository;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -41,10 +46,14 @@ public class SurveyFeedbackController {
 
     }
 
-    @RequestMapping(value = "/{survey_id}", method = RequestMethod.POST)
-    public SurveyFeedback addSurveyFeedback(@RequestBody SurveyFeedbackReceive surveyFeedbackReceive) {
+    @RequestMapping(value = "/public/{surveyID}", method = RequestMethod.POST)
+    public SurveyFeedback addSurveyFeedback(@RequestBody SurveyFeedbackReceive surveyFeedbackReceive, @PathVariable Long surveyID) {
         SurveyFeedback toinsert = new SurveyFeedback();
         toinsert.setAnswerOption(answerOptionRepository.findById(surveyFeedbackReceive.getAnswerOptionID()).get());
+        toinsert.setSurvey(surveyRepository.findById(surveyID).get());
+        toinsert.setParticipant(participantRepository.findById(surveyFeedbackReceive.getParticipantID()).get());
+        toinsert.setTimestamp("NOW");
+
         return surveyFeedbackRepository.save(toinsert);
 
     }

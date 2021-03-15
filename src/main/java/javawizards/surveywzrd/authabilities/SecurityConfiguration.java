@@ -52,7 +52,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             //public routes
             "/survey/public/**",
-            "/survey/answeroptions/public/**"
+            "/survey/answeroptions/public/**",
+            "/analysis/public/**",
+            "/survey_feedback/public/**"
 
 
     };

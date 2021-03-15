@@ -27,6 +27,10 @@ public class Survey {
     private String question;
     @Column(name = "multi_select")
     private boolean multiSelect;
+    @Column(name = "companyName")
+    private String companyName;
+
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "administrator_id", nullable = false)
     //@OnDelete(action = OnDeleteAction.CASCADE)
@@ -37,13 +41,14 @@ public class Survey {
     }
 
     public Survey
-            (String name, String description, String expiryDate, String question, boolean multiSelect) {
+            (String name, String description, String expiryDate, String question, boolean multiSelect, String companyName) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.expiryDate = expiryDate;
         this.question = question;
         this.multiSelect = multiSelect;
+        this.companyName = companyName;
     }
 
     public Administrator getAdministrator() {
@@ -100,5 +105,13 @@ public class Survey {
 
     public void setMultiSelect(boolean multiSelect) {
         this.multiSelect = multiSelect;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 }
