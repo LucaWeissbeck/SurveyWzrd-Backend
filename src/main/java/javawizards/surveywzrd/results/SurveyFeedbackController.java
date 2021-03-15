@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/survey_feedback")
+@RequestMapping(path = "/surveyfeedback")
 public class SurveyFeedbackController {
     private final SurveyFeedbackRepository surveyFeedbackRepository;
     private AnswerOptionRepository answerOptionRepository;

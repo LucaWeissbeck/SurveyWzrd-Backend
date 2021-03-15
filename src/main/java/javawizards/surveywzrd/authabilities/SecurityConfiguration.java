@@ -54,7 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/survey/public/**",
             "/survey/answeroptions/public/**",
             "/analysis/public/**",
-            "/survey_feedback/public/**"
+            "/surveyfeedback/public/**"
 
 
     };
