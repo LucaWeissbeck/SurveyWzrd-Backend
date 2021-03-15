@@ -26,6 +26,15 @@ public class AnswerOption {
     @JsonIgnore
     private Survey survey;
 
+    public AnswerOption(){
+
+    }
+    public AnswerOption(Long id, String value) {
+        this.id = id;
+        this.value = value;
+    }
+
+
     public Long getId() {
         return id;
     }
