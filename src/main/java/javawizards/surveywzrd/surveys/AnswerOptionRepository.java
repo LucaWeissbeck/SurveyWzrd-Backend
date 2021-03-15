@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface AnswerOptionRepository extends JpaRepository<AnswerOption, Long> {
-    List<AnswerOption> findAllBySurvey_id(Long surveyid);
+    List<AnswerOption> findAllBySurvey_id(Long surveyID);
     Optional<AnswerOption> findByIdAndSurveyId(Long id, Long surveyID);
 }
 

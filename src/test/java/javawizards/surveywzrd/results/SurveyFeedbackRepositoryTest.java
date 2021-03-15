@@ -75,6 +75,11 @@ class SurveyFeedbackRepositoryTest {
             }
 
             @Override
+            public List<SurveyFeedback> findAllByAnswerOption_Id(long answerOption_id) {
+                return null;
+            }
+
+            @Override
             public SurveyFeedback findById(long id) {
                 return null;
             }
