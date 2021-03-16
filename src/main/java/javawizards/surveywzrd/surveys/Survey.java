@@ -27,7 +27,7 @@ public class Survey {
     private String question;
     @Column(name = "multi_select")
     private boolean multiSelect;
-    @Column(name = "companyName")
+    @Column(name = "company_Name")
     private String companyName;
 
 
