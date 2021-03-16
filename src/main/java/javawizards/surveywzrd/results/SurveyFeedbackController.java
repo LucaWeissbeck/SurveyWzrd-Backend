@@ -1,6 +1,5 @@
 package javawizards.surveywzrd.results;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import javawizards.surveywzrd.surveys.AnswerOptionRepository;
 import javawizards.surveywzrd.surveys.SurveyRepository;
 import javawizards.surveywzrd.users.ParticipantRepository;
@@ -9,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -52,7 +52,7 @@ public class SurveyFeedbackController {
         toinsert.setAnswerOption(answerOptionRepository.findById(surveyFeedbackReceive.getAnswerOptionID()).get());
         toinsert.setSurvey(surveyRepository.findById(surveyID).get());
         toinsert.setParticipant(participantRepository.findById(surveyFeedbackReceive.getParticipantID()).get());
-        toinsert.setTimestamp("NOW");
+        toinsert.setTimestamp(new Date());
 
         return surveyFeedbackRepository.save(toinsert);
 

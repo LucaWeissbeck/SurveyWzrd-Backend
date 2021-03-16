@@ -1,5 +1,6 @@
 package javawizards.surveywzrd.analysis;
 
+import javawizards.surveywzrd.results.SurveyFeedback;
 import javawizards.surveywzrd.results.SurveyFeedbackRepository;
 import javawizards.surveywzrd.surveys.AnswerOptionRepository;
 import javawizards.surveywzrd.surveys.Survey;
@@ -28,6 +29,11 @@ public class AnalysisController {
     @RequestMapping(value = "/public/{surveyID}", method = RequestMethod.GET)
     public List<SurveyResultPerOption> getPublicSurveyResults(@PathVariable Long surveyID) {
         return AnalysisUtils.getPublicAnalysis1(surveyID, answerOptionRepository, surveyFeedbackRepository);
+
+    }
+    @RequestMapping(value = "/public/minimizedrawdata/{surveyID}", method = RequestMethod.GET)
+    public List<RawSurveyFeedbackData> getMinimizedSurveyRawResults(@PathVariable Long surveyID) {
+        return AnalysisUtils.getRawAnalysisDataMinimized(surveyFeedbackRepository.findAllBySurvey_Id(surveyID));
 
     }
 }

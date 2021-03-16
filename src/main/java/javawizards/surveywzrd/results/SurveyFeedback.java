@@ -1,5 +1,6 @@
 package javawizards.surveywzrd.results;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javawizards.surveywzrd.surveys.AnswerOption;
 import javawizards.surveywzrd.surveys.Survey;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "survey_feedback")
@@ -18,7 +20,9 @@ public class SurveyFeedback {
     private Long id;
 
     @Column(name = "timestamp")
-    private String timestamp;
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Europe/Paris")
+    private Date timestamp;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "answer_option_id", nullable = false)
@@ -41,7 +45,7 @@ public class SurveyFeedback {
     public SurveyFeedback() {
     }
 
-    public SurveyFeedback(Long id, String timestamp, AnswerOption answerOption, Survey survey, Participant participant) {
+    public SurveyFeedback(Long id, Date timestamp, AnswerOption answerOption, Survey survey, Participant participant) {
         this.id = id;
         this.timestamp = timestamp;
         this.answerOption = answerOption;
@@ -57,11 +61,11 @@ public class SurveyFeedback {
         this.id = id;
     }
 
-    public String getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 
