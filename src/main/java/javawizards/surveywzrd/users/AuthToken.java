@@ -21,6 +21,13 @@ public class AuthToken {
     @JsonIgnore
     private Administrator admin;
 
+    public AuthToken() {
+    }
+
+    public AuthToken(String authKey, Administrator admin) {
+        this.authKey = authKey;
+        this.admin = admin;
+    }
 
     public String getAuthKey() {
         return authKey;

@@ -1,21 +1,27 @@
 package javawizards.surveywzrd.users;
 
-import javawizards.surveywzrd.surveys.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/administrator")
 public class AdministratorController {
-    private AdministratorRepository administratorRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AdministratorRepository administratorRepository;
+    private final AuthTokenRepository authTokenRepository;
 
     @Autowired
-    public AdministratorController(AdministratorRepository administratorRepository) {
+    public AdministratorController(AdministratorRepository administratorRepository, PasswordEncoder passwordEncoder, AuthTokenRepository authTokenRepository) {
         this.administratorRepository = administratorRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authTokenRepository = authTokenRepository;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -27,13 +33,40 @@ public class AdministratorController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Administrator getAdmin(@PathVariable Long id) {
         return administratorRepository.findById(id)
-                .orElseThrow(() -> new NullPointerException(id.toString())); //SurveyNotFoundException(id));
+                .orElseThrow(() -> new NullPointerException(id.toString())); //AdminNotFoundException(id));
 
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public Administrator addAdmin(@RequestBody Administrator administrator) {
+        administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
         return administratorRepository.save(administrator);
+
+    }
+
+    @RequestMapping(value = "/public/register", method = RequestMethod.POST)
+    public Administrator registerAdmin(@RequestBody Administrator administrator) {
+        administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
+        return administratorRepository.save(administrator);
+
+    }
+
+    @RequestMapping(value = "/public/login", method = RequestMethod.POST)
+    public AuthToken loginAdmin(@RequestBody Administrator administrator) throws ServletException {
+        if (administrator.getEmail() == null || administrator.getPassword() == null) {
+            throw new ServletException("Please fill in username and password");
+        }
+
+        if (administratorRepository.findByEmail(administrator.getEmail()) == null) {
+            throw new ServletException("Email not found.");
+        }
+
+        if (!(passwordEncoder.matches(administrator.getPassword(),
+                administratorRepository.findByEmail(administrator.getEmail()).getPassword()))) {
+            throw new ServletException("Invalid login. Please check your email and password.");
+        }
+        String authKey = passwordEncoder.encode(administrator.getEmail()) + java.time.Clock.systemUTC().instant();
+        return authTokenRepository.save(new AuthToken(authKey, administrator));
 
     }
 
@@ -44,13 +77,22 @@ public class AdministratorController {
                     administrator1.setFirstName(administrator.getFirstName());
                     administrator1.setLastName(administrator.getLastName());
                     administrator1.setEmail(administrator.getEmail());
-                    administrator1.setPassword(administrator.getPassword());
+                    administrator1.setPassword(passwordEncoder.encode(administrator.getPassword()));
                     return administratorRepository.save(administrator1);
                 })
                 .orElseGet(() -> {
                     administrator.setId(id);
                     return administratorRepository.save(administrator);
                 });
+
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.DELETE)
+    public void logoutAdmin(@RequestHeader Map<String, String> headers) {
+        Administrator administrator =
+                administratorRepository.findById
+                        (authTokenRepository.findByauthKey(headers.get("x-api-key")).get().getAdmin().getId()).get();
+        authTokenRepository.deleteByAdmin(administrator);
 
     }
 

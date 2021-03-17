@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface AdministratorRepository extends CrudRepository<Administrator, Long>{
     Administrator findById(long id);
+    Administrator findByEmail(String email);
 
 }

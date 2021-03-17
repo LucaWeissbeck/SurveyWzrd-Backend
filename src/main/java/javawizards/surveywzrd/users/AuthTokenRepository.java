@@ -9,6 +9,8 @@ import java.util.Optional;
 @Repository
 public interface AuthTokenRepository extends CrudRepository<AuthToken, Long> {
     Optional<AuthToken> findByauthKey(String auth_key);
+    void deleteByAdmin_Email(String email);
+    void deleteByAdmin(Administrator administrator);
 
 
 }

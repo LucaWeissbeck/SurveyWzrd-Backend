@@ -20,6 +20,11 @@ class AdministratorRepositoryTest {
             }
 
             @Override
+            public Administrator findByEmail(String email) {
+                return null;
+            }
+
+            @Override
             public <S extends Administrator> S save(S entity) {
                 return null;
             }
