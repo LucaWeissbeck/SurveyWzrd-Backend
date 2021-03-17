@@ -78,6 +78,7 @@ public class AdministratorController {
                     administrator1.setLastName(administrator.getLastName());
                     administrator1.setEmail(administrator.getEmail());
                     administrator1.setPassword(passwordEncoder.encode(administrator.getPassword()));
+                    administrator1.setOwner(administrator.isOwner());
                     return administratorRepository.save(administrator1);
                 })
                 .orElseGet(() -> {

@@ -21,6 +21,8 @@ public class Administrator {
     private String email;
     @Column(name = "password")
     private String password;
+    @Column(name = "owner")
+    private boolean owner;
 
     public Long getId() {
         return id;
@@ -62,5 +64,11 @@ public class Administrator {
         this.password = password;
     }
 
+    public boolean isOwner() {
+        return owner;
+    }
 
+    public void setOwner(boolean owner) {
+        this.owner = owner;
+    }
 }
