@@ -5,8 +5,8 @@ import java.util.List;
 public class SurveyFeedbackReceiveMultipleChoice extends SurveyFeedbackReceive{
     private List<Long> answerOptionIDs;
 
-    public SurveyFeedbackReceiveMultipleChoice(String timestamp, List<Long> answerOptionIDs, String identifierID) {
-        super(timestamp, identifierID);
+    public SurveyFeedbackReceiveMultipleChoice(String timestamp, List<Long> answerOptionIDs, String identifierID, String browserLanguage) {
+        super(timestamp, identifierID, browserLanguage);
         this.answerOptionIDs = answerOptionIDs;
     }
 
