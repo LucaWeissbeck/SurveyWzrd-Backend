@@ -3,7 +3,6 @@ package javawizards.surveywzrd.users;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.security.core.parameters.P;
 
 import java.lang.reflect.Field;
 
@@ -54,12 +53,12 @@ class ParticipantTest {
     void getCookie_id() throws NoSuchFieldException, IllegalAccessException {
         //given
         final Participant pojo = new Participant();
-        final Field field = pojo.getClass().getDeclaredField("cookie_id");
+        final Field field = pojo.getClass().getDeclaredField("cookieId");
         field.setAccessible(true);
         field.set(pojo, "test");
 
         //when
-        final String result = pojo.getCookie_id();
+        final String result = pojo.getCookieId();
 
         //then
         assertEquals("test", result, "magic_values");
@@ -70,10 +69,10 @@ class ParticipantTest {
         final Participant pojo = new Participant();
 
         //when
-        pojo.setCookie_id("test");
+        pojo.setCookieId("test");
 
         //then
-        final Field field = pojo.getClass().getDeclaredField("cookie_id");
+        final Field field = pojo.getClass().getDeclaredField("cookieId");
         field.setAccessible(true);
         assertEquals("test", field.get(pojo), "foo");
     }

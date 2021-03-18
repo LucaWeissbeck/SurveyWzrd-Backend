@@ -2,12 +2,15 @@ package javawizards.surveywzrd.results;
 
 import javawizards.surveywzrd.surveys.AnswerOptionRepository;
 import javawizards.surveywzrd.surveys.SurveyRepository;
+import javawizards.surveywzrd.users.Participant;
 import javawizards.surveywzrd.users.ParticipantRepository;
+import javawizards.surveywzrd.users.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,16 +18,16 @@ import java.util.List;
 @RequestMapping(path = "/surveyfeedback")
 public class SurveyFeedbackController {
     private final SurveyFeedbackRepository surveyFeedbackRepository;
-    private AnswerOptionRepository answerOptionRepository;
-    private SurveyRepository surveyRepository;
-    private ParticipantRepository participantRepository;
+    private final AnswerOptionRepository answerOptionRepository;
+    private final SurveyRepository surveyRepository;
+    private final ParticipantService participantService;
 
     @Autowired
-    public SurveyFeedbackController(SurveyFeedbackRepository surveyFeedbackRepository, AnswerOptionRepository answerOptionRepository, SurveyRepository surveyRepository, ParticipantRepository participantRepository) {
+    public SurveyFeedbackController(SurveyFeedbackRepository surveyFeedbackRepository, AnswerOptionRepository answerOptionRepository, SurveyRepository surveyRepository, ParticipantService participantService) {
         this.surveyFeedbackRepository = surveyFeedbackRepository;
         this.answerOptionRepository = answerOptionRepository;
         this.surveyRepository = surveyRepository;
-        this.participantRepository = participantRepository;
+        this.participantService = participantService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -46,15 +49,36 @@ public class SurveyFeedbackController {
 
     }
 
-    @RequestMapping(value = "/public/{surveyID}", method = RequestMethod.POST)
-    public SurveyFeedback addSurveyFeedback(@RequestBody SurveyFeedbackReceive surveyFeedbackReceive, @PathVariable Long surveyID) {
-        SurveyFeedback toinsert = new SurveyFeedback();
-        toinsert.setAnswerOption(answerOptionRepository.findById(surveyFeedbackReceive.getAnswerOptionID()).get());
-        toinsert.setSurvey(surveyRepository.findById(surveyID).get());
-        toinsert.setParticipant(participantRepository.findById(surveyFeedbackReceive.getParticipantID()).get());
-        toinsert.setTimestamp(new Date());
+    @RequestMapping(value = "/public/single/{surveyID}", method = RequestMethod.POST)
+    public SurveyFeedback addSurveyFeedbackSingleChoice(@RequestBody SurveyFeedbackReceiveSingleChoice surveyFeedbackReceiveSingleChoice, @PathVariable Long surveyID) {
+        SurveyFeedback toInsert = new SurveyFeedback();
+        Participant participantPrepare = new Participant();
+        participantPrepare.setCookieId(surveyFeedbackReceiveSingleChoice.getIdentifierID());
+        toInsert.setAnswerOption(answerOptionRepository.findById(surveyFeedbackReceiveSingleChoice.getAnswerOptionID()).get());
+        toInsert.setSurvey(surveyRepository.findById(surveyID).get());
+        toInsert.setParticipant(participantService.existsOrCreate(participantPrepare));
+        toInsert.setTimestamp(new Date());
 
-        return surveyFeedbackRepository.save(toinsert);
+        return surveyFeedbackRepository.save(toInsert);
+
+    }
+
+    @RequestMapping(value = "/public/multiple/{surveyID}", method = RequestMethod.POST)
+    public List<SurveyFeedback> addSurveyFeedbackMultipleChoice(@RequestBody SurveyFeedbackReceiveMultipleChoice surveyFeedbackReceiveMultipleChoice, @PathVariable Long surveyID) {
+        List<SurveyFeedback> surveyFeedbacks = new ArrayList<>();
+        Participant participantPrepare = new Participant();
+        participantPrepare.setCookieId(surveyFeedbackReceiveMultipleChoice.getIdentifierID());
+        Participant participant = participantService.existsOrCreate(participantPrepare);
+        for (Long answerOptionID : surveyFeedbackReceiveMultipleChoice.getAnswerOptionIDs()) {
+            SurveyFeedback toInsert = new SurveyFeedback();
+            toInsert.setAnswerOption(answerOptionRepository.findById(answerOptionID).get());
+            toInsert.setSurvey(surveyRepository.findById(surveyID).get());
+            toInsert.setParticipant(participant);
+            toInsert.setTimestamp(new Date());
+            surveyFeedbacks.add(surveyFeedbackRepository.save(toInsert));
+        }
+
+        return surveyFeedbacks;
 
     }
 

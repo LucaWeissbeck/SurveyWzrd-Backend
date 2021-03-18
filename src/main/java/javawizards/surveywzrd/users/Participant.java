@@ -11,7 +11,7 @@ public class Participant {
     private Long id;
 
     @Column(name = "cookie_id")
-    private String cookie_id;
+    private String cookieId;
     @Column(name = "os")
     private String os;
     @Column(name = "browser_language")
@@ -22,9 +22,9 @@ public class Participant {
     public Participant() {
     }
 
-    public Participant(Long id, String cookie_id, String os, String browser_language, String location) {
+    public Participant(Long id, String cookieId, String os, String browser_language, String location) {
         this.id = id;
-        this.cookie_id = cookie_id;
+        this.cookieId = cookieId;
         this.os = os;
         this.browser_language = browser_language;
         this.location = location;
@@ -38,12 +38,12 @@ public class Participant {
         this.id = id;
     }
 
-    public String getCookie_id() {
-        return cookie_id;
+    public String getCookieId() {
+        return cookieId;
     }
 
-    public void setCookie_id(String cookie_id) {
-        this.cookie_id = cookie_id;
+    public void setCookieId(String cookie_id) {
+        this.cookieId = cookie_id;
     }
 
     public String getOs() {

@@ -1,17 +1,12 @@
 package javawizards.surveywzrd.results;
 
-import javawizards.surveywzrd.surveys.AnswerOption;
-import javawizards.surveywzrd.users.Participant;
-
-public class SurveyFeedbackReceive {
+public abstract class SurveyFeedbackReceive {
     private String timestamp;
-    private Long answerOptionID;
-    private Long participantID;
+    private String identifierID;
 
-    public SurveyFeedbackReceive(String timestamp, Long answerOptionID, Long participantID) {
+    public SurveyFeedbackReceive(String timestamp, String identifierID) {
         this.timestamp = timestamp;
-        this.answerOptionID = answerOptionID;
-        this.participantID = participantID;
+        this.identifierID = identifierID;
     }
 
     public String getTimestamp() {
@@ -22,19 +17,12 @@ public class SurveyFeedbackReceive {
         this.timestamp = timestamp;
     }
 
-    public Long getAnswerOptionID() {
-        return answerOptionID;
+    public String getIdentifierID() {
+        return identifierID;
     }
 
-    public void setAnswerOptionID(Long answerOptionID) {
-        this.answerOptionID = answerOptionID;
+    public void setIdentifierID(String identifierID) {
+        this.identifierID = identifierID;
     }
 
-    public Long getParticipantID() {
-        return participantID;
-    }
-
-    public void setParticipantID(Long participantID) {
-        this.participantID = participantID;
-    }
 }

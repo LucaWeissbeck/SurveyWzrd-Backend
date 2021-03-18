@@ -21,6 +21,16 @@ class ParticipantRepositoryTest {
             }
 
             @Override
+            public Participant findByCookieId(String id) {
+                return null;
+            }
+
+            @Override
+            public boolean existsByCookieId(String id) {
+                return false;
+            }
+
+            @Override
             public <S extends Participant> S save(S entity) {
                 return null;
             }

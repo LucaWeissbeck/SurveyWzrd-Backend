@@ -1,7 +1,5 @@
 package javawizards.surveywzrd.users;
 
-import javawizards.surveywzrd.surveys.Survey;
-import javawizards.surveywzrd.surveys.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +40,7 @@ public class ParticipantController {
     public Participant updateParticipant(@RequestBody Participant participant, @PathVariable Long id) {
         return participantRepository.findById(id)
                 .map(participant1 -> {
-                    participant1.setCookie_id(participant.getCookie_id());
+                    participant1.setCookieId(participant.getCookieId());
                     participant1.setOs(participant.getOs());
                     participant1.setBrowser_language(participant.getBrowser_language());
                     participant1.setLocation(participant.getLocation());

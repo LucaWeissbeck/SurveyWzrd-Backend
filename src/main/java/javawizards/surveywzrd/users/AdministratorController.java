@@ -16,17 +16,23 @@ public class AdministratorController {
     private final PasswordEncoder passwordEncoder;
     private final AdministratorRepository administratorRepository;
     private final AuthTokenRepository authTokenRepository;
+    private final AuthTokenService authTokenService;
 
     @Autowired
-    public AdministratorController(AdministratorRepository administratorRepository, PasswordEncoder passwordEncoder, AuthTokenRepository authTokenRepository) {
+    public AdministratorController(AdministratorRepository administratorRepository, PasswordEncoder passwordEncoder, AuthTokenRepository authTokenRepository, AuthTokenService authTokenService) {
         this.administratorRepository = administratorRepository;
         this.passwordEncoder = passwordEncoder;
         this.authTokenRepository = authTokenRepository;
+        this.authTokenService = authTokenService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<List<Administrator>> getAllAdmins() {
-        return new ResponseEntity<>((List<Administrator>) administratorRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<Administrator>> getAllAdmins(@RequestHeader Map<String, String> headers) throws ServletException {
+        Administrator administrator = authTokenService.authenticate(headers);
+        if (administrator.isOwner()) {
+            return new ResponseEntity<>((List<Administrator>) administratorRepository.findAll(), HttpStatus.OK);
+        }
+        throw new ServletException("You are not an owner. No access right.");
 
     }
 
@@ -90,9 +96,7 @@ public class AdministratorController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.DELETE)
     public void logoutAdmin(@RequestHeader Map<String, String> headers) {
-        Administrator administrator =
-                administratorRepository.findById
-                        (authTokenRepository.findByauthKey(headers.get("x-api-key")).get().getAdmin().getId()).get();
+        Administrator administrator = authTokenService.authenticate(headers);
         authTokenRepository.deleteByAdmin(administrator);
 
     }
@@ -104,8 +108,12 @@ public class AdministratorController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public void deleteAll() {
-        administratorRepository.deleteAll();
+    public void deleteAll(@RequestHeader Map<String, String> headers) throws ServletException {
+        Administrator administrator = authTokenService.authenticate(headers);
+        if (administrator.isOwner()) {
+            administratorRepository.deleteAll();
+        }
+        throw new ServletException("You are not an owner. No access right.");
 
     }
 }

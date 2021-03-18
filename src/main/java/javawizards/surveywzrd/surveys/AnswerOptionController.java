@@ -3,10 +3,11 @@ package javawizards.surveywzrd.surveys;
 import javawizards.surveywzrd.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping(path="/survey/answeroptions")
+@RequestMapping(path = "/survey/answeroptions")
 public class AnswerOptionController {
 
     @Autowired
@@ -20,6 +21,7 @@ public class AnswerOptionController {
         System.out.println(surveyID);
         return answerOptionRepository.findAllBySurvey_id(surveyID);
     }
+
     @RequestMapping(value = "/{surveyID}", method = RequestMethod.POST)
     public AnswerOption addAnswerOption(@PathVariable(value = "surveyID") Long surveyID, @RequestBody AnswerOption answerOption) {
         return surveyRepository.findById(surveyID).map(survey -> {
@@ -28,11 +30,13 @@ public class AnswerOptionController {
         }).orElseThrow(() -> new ResourceNotFoundException("SurveyID " + surveyID + " not found"));
 
     }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteAnswerOption(@PathVariable Long id) {
         answerOptionRepository.deleteById(id);
 
     }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public AnswerOption updateAnswerOption(@RequestBody AnswerOption answerOption, @PathVariable Long id) {
         return answerOptionRepository.findById(id).map(answerOption1 -> {
