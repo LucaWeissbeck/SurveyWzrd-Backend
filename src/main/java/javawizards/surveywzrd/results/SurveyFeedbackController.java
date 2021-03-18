@@ -1,5 +1,9 @@
 package javawizards.surveywzrd.results;
 
+import com.blueconic.browscap.Capabilities;
+import com.blueconic.browscap.ParseException;
+import com.blueconic.browscap.UserAgentParser;
+import com.blueconic.browscap.UserAgentService;
 import javawizards.surveywzrd.surveys.AnswerOptionRepository;
 import javawizards.surveywzrd.surveys.SurveyRepository;
 import javawizards.surveywzrd.users.Participant;
@@ -10,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,9 +56,10 @@ public class SurveyFeedbackController {
     }
 
     @RequestMapping(value = "/public/single/{surveyID}", method = RequestMethod.POST)
-    public SurveyFeedback addSurveyFeedbackSingleChoice(@RequestBody SurveyFeedbackReceiveSingleChoice surveyFeedbackReceiveSingleChoice, @PathVariable Long surveyID) {
+    public SurveyFeedback addSurveyFeedbackSingleChoice(HttpServletRequest req, @RequestBody SurveyFeedbackReceiveSingleChoice surveyFeedbackReceiveSingleChoice, @PathVariable Long surveyID) {
         SurveyFeedback toInsert = new SurveyFeedback();
         Participant participantPrepare = new Participant();
+        participantPrepare = participantService.addHeaderInformationToParticipant(participantPrepare, req);
         participantPrepare.setCookieId(surveyFeedbackReceiveSingleChoice.getIdentifierID());
         toInsert.setAnswerOption(answerOptionRepository.findById(surveyFeedbackReceiveSingleChoice.getAnswerOptionID()).get());
         toInsert.setSurvey(surveyRepository.findById(surveyID).get());
@@ -63,10 +70,13 @@ public class SurveyFeedbackController {
 
     }
 
+
+
     @RequestMapping(value = "/public/multiple/{surveyID}", method = RequestMethod.POST)
-    public List<SurveyFeedback> addSurveyFeedbackMultipleChoice(@RequestBody SurveyFeedbackReceiveMultipleChoice surveyFeedbackReceiveMultipleChoice, @PathVariable Long surveyID) {
+    public List<SurveyFeedback> addSurveyFeedbackMultipleChoice(HttpServletRequest req, @RequestBody SurveyFeedbackReceiveMultipleChoice surveyFeedbackReceiveMultipleChoice, @PathVariable Long surveyID) {
         List<SurveyFeedback> surveyFeedbacks = new ArrayList<>();
         Participant participantPrepare = new Participant();
+        participantPrepare = participantService.addHeaderInformationToParticipant(participantPrepare, req);
         participantPrepare.setCookieId(surveyFeedbackReceiveMultipleChoice.getIdentifierID());
         Participant participant = participantService.existsOrCreate(participantPrepare);
         for (Long answerOptionID : surveyFeedbackReceiveMultipleChoice.getAnswerOptionIDs()) {
