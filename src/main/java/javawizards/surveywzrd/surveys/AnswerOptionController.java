@@ -18,7 +18,6 @@ public class AnswerOptionController {
 
     @GetMapping("/public/{surveyID}")
     public List<AnswerOption> getAllAnswerOptionsBySurveyID(@PathVariable(value = "surveyID") Long surveyID) {
-        System.out.println(surveyID);
         return answerOptionRepository.findAllBySurvey_id(surveyID);
     }
 
