@@ -4,6 +4,7 @@ import com.blueconic.browscap.Capabilities;
 import com.blueconic.browscap.ParseException;
 import com.blueconic.browscap.UserAgentParser;
 import com.blueconic.browscap.UserAgentService;
+import javawizards.surveywzrd.SurveywzrdApplication;
 import javawizards.surveywzrd.surveys.AnswerOptionRepository;
 import javawizards.surveywzrd.surveys.SurveyRepository;
 import javawizards.surveywzrd.users.Participant;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,17 +58,19 @@ public class SurveyFeedbackController {
     }
 
     @RequestMapping(value = "/public/single/{surveyID}", method = RequestMethod.POST)
-    public SurveyFeedback addSurveyFeedbackSingleChoice(HttpServletRequest req, @RequestBody SurveyFeedbackReceiveSingleChoice surveyFeedbackReceiveSingleChoice, @PathVariable Long surveyID) {
+    public SurveyFeedbackReceiveSingleChoice addSurveyFeedbackSingleChoice(HttpServletRequest req, @RequestBody SurveyFeedbackReceiveSingleChoice surveyFeedbackReceiveSingleChoice, @PathVariable Long surveyID) {
         SurveyFeedback toInsert = new SurveyFeedback();
         Participant participantPrepare = new Participant();
         participantPrepare = participantService.addHeaderInformationToParticipant(participantPrepare, req);
         participantPrepare.setCookieId(surveyFeedbackReceiveSingleChoice.getIdentifierID());
+        participantPrepare.setBrowser_language(surveyFeedbackReceiveSingleChoice.getBrowserLanguage());
         toInsert.setAnswerOption(answerOptionRepository.findById(surveyFeedbackReceiveSingleChoice.getAnswerOptionID()).get());
         toInsert.setSurvey(surveyRepository.findById(surveyID).get());
         toInsert.setParticipant(participantService.existsOrCreate(participantPrepare));
         toInsert.setTimestamp(new Date());
+        surveyFeedbackRepository.save(toInsert);
 
-        return surveyFeedbackRepository.save(toInsert);
+        return new SurveyFeedbackReceiveSingleChoice(new SimpleDateFormat(SurveywzrdApplication.dateformat).format(toInsert.getTimestamp()),toInsert.getAnswerOption().getId(),participantPrepare.getCookieId(),participantPrepare.getBrowser_language());
 
     }
 

@@ -1,5 +1,6 @@
 package javawizards.surveywzrd.analysis;
 
+import javawizards.surveywzrd.SurveywzrdApplication;
 import javawizards.surveywzrd.results.SurveyFeedback;
 import javawizards.surveywzrd.results.SurveyFeedbackRepository;
 import javawizards.surveywzrd.surveys.AnswerOption;
@@ -28,7 +29,7 @@ public class AnalysisUtils {
     public static List<RawSurveyFeedbackData> getRawAnalysisDataMinimized(List<SurveyFeedback> rawFeedback){
         List<RawSurveyFeedbackData> returned = new ArrayList<>();
         for (SurveyFeedback feedback: rawFeedback){
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat(SurveywzrdApplication.dateformat);
             returned.add(new RawSurveyFeedbackData(feedback.getId(), formatter.format(feedback.getTimestamp()),feedback.getAnswerOption().getId(), feedback.getAnswerOption().getValue()));
         }
         return returned;
