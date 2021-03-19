@@ -77,11 +77,12 @@ public class SurveyFeedbackController {
 
 
     @RequestMapping(value = "/public/multiple/{surveyID}", method = RequestMethod.POST)
-    public List<SurveyFeedback> addSurveyFeedbackMultipleChoice(HttpServletRequest req, @RequestBody SurveyFeedbackReceiveMultipleChoice surveyFeedbackReceiveMultipleChoice, @PathVariable Long surveyID) {
+    public SurveyFeedbackReceiveMultipleChoice addSurveyFeedbackMultipleChoice(HttpServletRequest req, @RequestBody SurveyFeedbackReceiveMultipleChoice surveyFeedbackReceiveMultipleChoice, @PathVariable Long surveyID) {
         List<SurveyFeedback> surveyFeedbacks = new ArrayList<>();
         Participant participantPrepare = new Participant();
         participantPrepare = participantService.addHeaderInformationToParticipant(participantPrepare, req);
         participantPrepare.setCookieId(surveyFeedbackReceiveMultipleChoice.getIdentifierID());
+        participantPrepare.setBrowser_language(surveyFeedbackReceiveMultipleChoice.getBrowserLanguage());
         Participant participant = participantService.existsOrCreate(participantPrepare);
         for (Long answerOptionID : surveyFeedbackReceiveMultipleChoice.getAnswerOptionIDs()) {
             SurveyFeedback toInsert = new SurveyFeedback();
@@ -92,7 +93,7 @@ public class SurveyFeedbackController {
             surveyFeedbacks.add(surveyFeedbackRepository.save(toInsert));
         }
 
-        return surveyFeedbacks;
+        return new SurveyFeedbackReceiveMultipleChoice(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(surveyFeedbackReceiveMultipleChoice.getTimestamp()),surveyFeedbackReceiveMultipleChoice.getAnswerOptionIDs(),participant.getCookieId(),participant.getBrowser_language());
 
     }
 

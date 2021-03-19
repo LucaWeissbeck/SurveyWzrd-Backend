@@ -5,7 +5,6 @@ import com.blueconic.browscap.ParseException;
 import com.blueconic.browscap.UserAgentParser;
 import com.blueconic.browscap.UserAgentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.web.header.Header;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,12 +40,16 @@ public class ParticipantService {
             final Capabilities capabilities = parser.parse(userAgentHeader);
             final String browser = capabilities.getBrowser();
             final String browserType = capabilities.getBrowserType();
-            final String browserMajorVersion = capabilities.getBrowserMajorVersion();
+            //final String browserMajorVersion = capabilities.getBrowserMajorVersion();
             final String deviceType = capabilities.getDeviceType();
             final String platform = capabilities.getPlatform();
             final String platformVersion = capabilities.getPlatformVersion();
 
-            participant.setOs(platform);
+            participant.setPlatform(platform);
+            participant.setBrowser(browser);
+            participant.setBrowserType(browserType);
+            participant.setDeviceType(deviceType);
+            participant.setPlatformVersion(platformVersion);
 
         } catch (IOException e) {
             e.printStackTrace();

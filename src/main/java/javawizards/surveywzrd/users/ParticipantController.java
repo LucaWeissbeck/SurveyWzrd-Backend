@@ -41,7 +41,7 @@ public class ParticipantController {
         return participantRepository.findById(id)
                 .map(participant1 -> {
                     participant1.setCookieId(participant.getCookieId());
-                    participant1.setOs(participant.getOs());
+                    participant1.setPlatform(participant.getPlatform());
                     participant1.setBrowser_language(participant.getBrowser_language());
                     participant1.setLocation(participant.getLocation());
                     return participantRepository.save(participant1);

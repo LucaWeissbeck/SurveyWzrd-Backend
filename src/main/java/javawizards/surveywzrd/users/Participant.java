@@ -12,20 +12,33 @@ public class Participant {
 
     @Column(name = "cookie_id")
     private String cookieId;
-    @Column(name = "os")
-    private String os;
+    @Column(name = "platform")
+    private String platform;
+    @Column(name = "platformVersion")
+    private String platformVersion;
+    @Column(name = "deviceType")
+    private String deviceType;
+    @Column(name = "browser")
+    private String browser;
+    @Column(name = "browserType")
+    private String browserType;
     @Column(name = "browser_language")
     private String browser_language;
+
     @Column(name = "location")
     private String location;
 
     public Participant() {
     }
 
-    public Participant(Long id, String cookieId, String os, String browser_language, String location) {
+    public Participant(Long id, String cookieId, String platform, String platformVersion, String deviceType, String browser, String browserType, String browser_language, String location) {
         this.id = id;
         this.cookieId = cookieId;
-        this.os = os;
+        this.platform = platform;
+        this.platformVersion = platformVersion;
+        this.deviceType = deviceType;
+        this.browser = browser;
+        this.browserType = browserType;
         this.browser_language = browser_language;
         this.location = location;
     }
@@ -46,12 +59,12 @@ public class Participant {
         this.cookieId = cookie_id;
     }
 
-    public String getOs() {
-        return os;
+    public String getPlatform() {
+        return platform;
     }
 
-    public void setOs(String os) {
-        this.os = os;
+    public void setPlatform(String platform) {
+        this.platform = platform;
     }
 
     public String getBrowser_language() {
@@ -68,5 +81,37 @@ public class Participant {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getPlatformVersion() {
+        return platformVersion;
+    }
+
+    public void setPlatformVersion(String platformVersion) {
+        this.platformVersion = platformVersion;
+    }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public String getBrowser() {
+        return browser;
+    }
+
+    public void setBrowser(String browser) {
+        this.browser = browser;
+    }
+
+    public String getBrowserType() {
+        return browserType;
+    }
+
+    public void setBrowserType(String browserType) {
+        this.browserType = browserType;
     }
 }

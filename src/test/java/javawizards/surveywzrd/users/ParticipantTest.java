@@ -81,12 +81,12 @@ class ParticipantTest {
     void getOs() throws NoSuchFieldException, IllegalAccessException {
         //given
         final Participant pojo = new Participant();
-        final Field field = pojo.getClass().getDeclaredField("os");
+        final Field field = pojo.getClass().getDeclaredField("platform");
         field.setAccessible(true);
         field.set(pojo, "test");
 
         //when
-        final String result = pojo.getOs();
+        final String result = pojo.getPlatform();
 
         //then
         assertEquals("test", result, "magic_values");
@@ -97,10 +97,10 @@ class ParticipantTest {
         final Participant pojo = new Participant();
 
         //when
-        pojo.setOs("test");
+        pojo.setPlatform("test");
 
         //then
-        final Field field = pojo.getClass().getDeclaredField("os");
+        final Field field = pojo.getClass().getDeclaredField("platform");
         field.setAccessible(true);
         assertEquals("test", field.get(pojo), "foo");
     }
