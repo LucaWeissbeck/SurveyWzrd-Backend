@@ -70,7 +70,7 @@ public class SurveyFeedbackController {
         toInsert.setTimestamp(new Date());
         surveyFeedbackRepository.save(toInsert);
 
-        return new SurveyFeedbackReceiveSingleChoice(new SimpleDateFormat(SurveywzrdApplication.dateformat).format(toInsert.getTimestamp()),toInsert.getAnswerOption().getId(),participantPrepare.getCookieId(),participantPrepare.getBrowser_language());
+        return new SurveyFeedbackReceiveSingleChoice(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(toInsert.getTimestamp()),toInsert.getAnswerOption().getId(),participantPrepare.getCookieId(),participantPrepare.getBrowser_language());
 
     }
 

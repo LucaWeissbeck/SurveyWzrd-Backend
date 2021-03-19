@@ -10,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @SpringBootApplication
 public class SurveywzrdApplication {
 
-    public static final String dateformat = "dd-MM-yyyy";
     public static void main(String[] args) {
         SpringApplication.run(SurveywzrdApplication.class, args);
     }

@@ -29,7 +29,7 @@ public class AnalysisUtils {
     public static List<RawSurveyFeedbackData> getRawAnalysisDataMinimized(List<SurveyFeedback> rawFeedback){
         List<RawSurveyFeedbackData> returned = new ArrayList<>();
         for (SurveyFeedback feedback: rawFeedback){
-            SimpleDateFormat formatter = new SimpleDateFormat(SurveywzrdApplication.dateformat);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             returned.add(new RawSurveyFeedbackData(feedback.getId(), formatter.format(feedback.getTimestamp()),feedback.getAnswerOption().getId(), feedback.getAnswerOption().getValue()));
         }
         return returned;
