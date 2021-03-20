@@ -93,7 +93,7 @@ public class SurveyFeedbackController {
             surveyFeedbacks.add(surveyFeedbackRepository.save(toInsert));
         }
 
-        return new SurveyFeedbackReceiveMultipleChoice(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(surveyFeedbackReceiveMultipleChoice.getTimestamp()),surveyFeedbackReceiveMultipleChoice.getAnswerOptionIDs(),participant.getCookieId(),participant.getBrowser_language());
+        return new SurveyFeedbackReceiveMultipleChoice(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()),surveyFeedbackReceiveMultipleChoice.getAnswerOptionIDs(),participant.getCookieId(),participant.getBrowser_language());
 
     }
 
