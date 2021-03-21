@@ -32,7 +32,7 @@ public class SurveyController {
         this.authTokenService = authTokenService;
     }
 
-    @RequestMapping(value = "/getAll/", method = RequestMethod.GET)
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ResponseEntity<List<Survey>> getAllSurveys(@RequestHeader Map<String, String> headers) throws ServletException {
         Administrator administrator = authTokenService.authenticate(headers);
         if (administrator.isOwner()) {
@@ -42,7 +42,7 @@ public class SurveyController {
 
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/getForAdmin", method = RequestMethod.GET)
     public ResponseEntity<List<Survey>> getAllSurveysByAdministrator(@RequestHeader Map<String, String> headers) {
         Administrator administrator = authTokenService.authenticate(headers);
         return new ResponseEntity<>(surveyRepository.findAllByAdministrator_Id(administrator.getId()), HttpStatus.OK);
