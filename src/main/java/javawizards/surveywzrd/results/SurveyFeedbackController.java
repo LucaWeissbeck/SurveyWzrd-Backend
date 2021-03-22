@@ -1,14 +1,8 @@
 package javawizards.surveywzrd.results;
 
-import com.blueconic.browscap.Capabilities;
-import com.blueconic.browscap.ParseException;
-import com.blueconic.browscap.UserAgentParser;
-import com.blueconic.browscap.UserAgentService;
-import javawizards.surveywzrd.SurveywzrdApplication;
 import javawizards.surveywzrd.surveys.AnswerOptionRepository;
 import javawizards.surveywzrd.surveys.SurveyRepository;
 import javawizards.surveywzrd.users.Participant;
-import javawizards.surveywzrd.users.ParticipantRepository;
 import javawizards.surveywzrd.users.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,14 +56,14 @@ public class SurveyFeedbackController {
         Participant participantPrepare = new Participant();
         participantPrepare = participantService.addHeaderInformationToParticipant(participantPrepare, req);
         participantPrepare.setCookieId(surveyFeedbackReceiveSingleChoice.getIdentifierID());
-        participantPrepare.setBrowser_language(surveyFeedbackReceiveSingleChoice.getBrowserLanguage());
+        participantPrepare.setBrowserLanguage(surveyFeedbackReceiveSingleChoice.getBrowserLanguage());
         toInsert.setAnswerOption(answerOptionRepository.findById(surveyFeedbackReceiveSingleChoice.getAnswerOptionID()).get());
         toInsert.setSurvey(surveyRepository.findById(surveyID).get());
         toInsert.setParticipant(participantService.existsOrCreate(participantPrepare));
         toInsert.setTimestamp(new Date());
         surveyFeedbackRepository.save(toInsert);
 
-        return new SurveyFeedbackReceiveSingleChoice(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(toInsert.getTimestamp()),toInsert.getAnswerOption().getId(),participantPrepare.getCookieId(),participantPrepare.getBrowser_language());
+        return new SurveyFeedbackReceiveSingleChoice(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(toInsert.getTimestamp()),toInsert.getAnswerOption().getId(),participantPrepare.getCookieId(),participantPrepare.getBrowserLanguage());
 
     }
 
@@ -82,7 +75,7 @@ public class SurveyFeedbackController {
         Participant participantPrepare = new Participant();
         participantPrepare = participantService.addHeaderInformationToParticipant(participantPrepare, req);
         participantPrepare.setCookieId(surveyFeedbackReceiveMultipleChoice.getIdentifierID());
-        participantPrepare.setBrowser_language(surveyFeedbackReceiveMultipleChoice.getBrowserLanguage());
+        participantPrepare.setBrowserLanguage(surveyFeedbackReceiveMultipleChoice.getBrowserLanguage());
         Participant participant = participantService.existsOrCreate(participantPrepare);
         for (Long answerOptionID : surveyFeedbackReceiveMultipleChoice.getAnswerOptionIDs()) {
             SurveyFeedback toInsert = new SurveyFeedback();
@@ -93,7 +86,7 @@ public class SurveyFeedbackController {
             surveyFeedbacks.add(surveyFeedbackRepository.save(toInsert));
         }
 
-        return new SurveyFeedbackReceiveMultipleChoice(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()),surveyFeedbackReceiveMultipleChoice.getAnswerOptionIDs(),participant.getCookieId(),participant.getBrowser_language());
+        return new SurveyFeedbackReceiveMultipleChoice(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()),surveyFeedbackReceiveMultipleChoice.getAnswerOptionIDs(),participant.getCookieId(),participant.getBrowserLanguage());
 
     }
 

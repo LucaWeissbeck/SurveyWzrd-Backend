@@ -42,7 +42,7 @@ public class ParticipantController {
                 .map(participant1 -> {
                     participant1.setCookieId(participant.getCookieId());
                     participant1.setPlatform(participant.getPlatform());
-                    participant1.setBrowser_language(participant.getBrowser_language());
+                    participant1.setBrowserLanguage(participant.getBrowserLanguage());
                     participant1.setLocation(participant.getLocation());
                     return participantRepository.save(participant1);
                 })

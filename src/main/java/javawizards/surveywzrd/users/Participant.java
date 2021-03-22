@@ -14,16 +14,16 @@ public class Participant {
     private String cookieId;
     @Column(name = "platform")
     private String platform;
-    @Column(name = "platformVersion")
+    @Column(name = "platform_version")
     private String platformVersion;
-    @Column(name = "deviceType")
+    @Column(name = "device_type")
     private String deviceType;
     @Column(name = "browser")
     private String browser;
-    @Column(name = "browserType")
+    @Column(name = "browser_type")
     private String browserType;
     @Column(name = "browser_language")
-    private String browser_language;
+    private String browserLanguage;
 
     @Column(name = "location")
     private String location;
@@ -31,7 +31,7 @@ public class Participant {
     public Participant() {
     }
 
-    public Participant(Long id, String cookieId, String platform, String platformVersion, String deviceType, String browser, String browserType, String browser_language, String location) {
+    public Participant(Long id, String cookieId, String platform, String platformVersion, String deviceType, String browser, String browserType, String browserLanguage, String location) {
         this.id = id;
         this.cookieId = cookieId;
         this.platform = platform;
@@ -39,7 +39,7 @@ public class Participant {
         this.deviceType = deviceType;
         this.browser = browser;
         this.browserType = browserType;
-        this.browser_language = browser_language;
+        this.browserLanguage = browserLanguage;
         this.location = location;
     }
 
@@ -67,12 +67,12 @@ public class Participant {
         this.platform = platform;
     }
 
-    public String getBrowser_language() {
-        return browser_language;
+    public String getBrowserLanguage() {
+        return browserLanguage;
     }
 
-    public void setBrowser_language(String browser_language) {
-        this.browser_language = browser_language;
+    public void setBrowserLanguage(String browser_language) {
+        this.browserLanguage = browser_language;
     }
 
     public String getLocation() {

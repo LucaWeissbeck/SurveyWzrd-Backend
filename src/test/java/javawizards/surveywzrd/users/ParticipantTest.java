@@ -109,12 +109,12 @@ class ParticipantTest {
     void getBrowser_language() throws NoSuchFieldException, IllegalAccessException {
         //given
         final Participant pojo = new Participant();
-        final Field field = pojo.getClass().getDeclaredField("browser_language");
+        final Field field = pojo.getClass().getDeclaredField("browserLanguage");
         field.setAccessible(true);
         field.set(pojo, "test");
 
         //when
-        final String result = pojo.getBrowser_language();
+        final String result = pojo.getBrowserLanguage();
 
         //then
         assertEquals("test", result, "magic_values");
@@ -125,10 +125,10 @@ class ParticipantTest {
         final Participant pojo = new Participant();
 
         //when
-        pojo.setBrowser_language("test");
+        pojo.setBrowserLanguage("test");
 
         //then
-        final Field field = pojo.getClass().getDeclaredField("browser_language");
+        final Field field = pojo.getClass().getDeclaredField("browserLanguage");
         field.setAccessible(true);
         assertEquals("test", field.get(pojo), "foo");
     }
