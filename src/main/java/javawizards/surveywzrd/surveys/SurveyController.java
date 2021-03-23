@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/survey")
 public class SurveyController {
     private final SurveyRepository surveyRepository;

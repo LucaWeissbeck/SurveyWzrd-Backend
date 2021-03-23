@@ -5,14 +5,12 @@ import javawizards.surveywzrd.results.SurveyFeedbackRepository;
 import javawizards.surveywzrd.surveys.AnswerOptionRepository;
 import javawizards.surveywzrd.surveys.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/analysis")
 public class AnalysisController {
 

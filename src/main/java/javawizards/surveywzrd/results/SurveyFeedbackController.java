@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/surveyfeedback")
 public class SurveyFeedbackController {
     private final SurveyFeedbackRepository surveyFeedbackRepository;
