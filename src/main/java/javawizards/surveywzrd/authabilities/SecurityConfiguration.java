@@ -36,6 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/surveyfeedback/public/**",
             "/administrator/public/**"
 
+
     };
     AuthTokenRepository authTokenRepository;
     AdministratorRepository administratorRepository;
