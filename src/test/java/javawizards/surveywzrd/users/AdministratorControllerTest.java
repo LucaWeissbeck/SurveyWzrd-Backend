@@ -9,13 +9,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class AdministratorControllerTest {
 
     private AdministratorController administratorcontroller;
+
     @BeforeEach
-    void setUp() throws  Exception{
-      //  administratorcontroller = new AdministratorController();
+    void setUp() {
+        System.out.println("setUp");
     }
 
     @AfterEach
     void tearDown() {
+        System.out.println("tearDown");
     }
 
     @Test
@@ -24,10 +26,12 @@ class AdministratorControllerTest {
 
     @Test
     void getAdmin() {
+        AdministratorRepository findById;
     }
 
     @Test
     void addAdmin() {
+        assertEquals();
     }
 
     @Test
@@ -40,5 +44,6 @@ class AdministratorControllerTest {
 
     @Test
     void deleteAll() {
+        assertEquals(AdministratorRepository.class, ); AdministratorRepository
     }
 }

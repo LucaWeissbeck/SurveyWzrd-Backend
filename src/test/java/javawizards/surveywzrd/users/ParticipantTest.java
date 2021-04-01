@@ -13,12 +13,13 @@ class ParticipantTest {
     private Participant participant;
 
     @BeforeEach
-    void setUp() throws Exception{
-        participant = new Participant();
+    void setUp() {
+        System.out.println("setUp");
     }
 
     @AfterEach
     void tearDown() {
+        System.out.println("tearDown");
     }
 
     @Test

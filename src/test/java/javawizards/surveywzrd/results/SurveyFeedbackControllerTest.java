@@ -12,12 +12,13 @@ class SurveyFeedbackControllerTest {
 
 
     @BeforeEach
-    void setUp() throws Exception{
-       // surveyfeedbackcontroller = new SurveyFeedbackController();
+    void setUp() {
+        System.out.println("setUp");
     }
 
     @AfterEach
     void tearDown() {
+        System.out.println("tearDown");
     }
 
     @Test

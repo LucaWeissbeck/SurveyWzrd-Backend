@@ -12,12 +12,13 @@ class AdministratorTest {
 
     private Administrator administrator;
     @BeforeEach
-    void setUp() throws Exception{
-        administrator = new Administrator();
+    void setUp() {
+        System.out.println("setUp");
     }
 
     @AfterEach
     void tearDown() {
+        System.out.println("tearDown");
     }
 
     @Test

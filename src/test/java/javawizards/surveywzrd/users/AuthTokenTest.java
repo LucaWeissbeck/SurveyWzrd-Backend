@@ -11,13 +11,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class AuthTokenTest {
 
     private AuthToken authtoken;
+
     @BeforeEach
-    void setUp() throws Exception{
-        authtoken = new AuthToken();
+    void setUp() {
+        System.out.println("setUp");
     }
 
     @AfterEach
     void tearDown() {
+        System.out.println("tearDown");
     }
 
     @Test

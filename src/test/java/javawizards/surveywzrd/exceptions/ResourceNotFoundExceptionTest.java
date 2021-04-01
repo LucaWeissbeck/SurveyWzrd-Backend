@@ -10,11 +10,12 @@ class ResourceNotFoundExceptionTest {
     private ResourceNotFoundException resourcenotfoundexception;
 
     @BeforeEach
-    void setUp() throws Exception {
-        resourcenotfoundexception = new ResourceNotFoundException();
+    void setUp() {
+        System.out.println("setUp");
     }
 
     @AfterEach
     void tearDown() {
+        System.out.println("tearDown");
     }
 }
