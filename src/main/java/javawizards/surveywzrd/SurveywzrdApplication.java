@@ -13,14 +13,4 @@ public class SurveywzrdApplication {
     public static void main(String[] args) {
         SpringApplication.run(SurveywzrdApplication.class, args);
     }
-    //TODO: Remove before production because of deprecation!
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:3000");
-            }
-        };
-    }
 }
