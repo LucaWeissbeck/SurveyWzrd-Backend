@@ -9,10 +9,12 @@ class ForbiddenExceptionTest {
 
     private ForbiddenException forbiddenexception;
     @BeforeEach
-    void setUp() throws Exception{
-        forbiddenexception = new ForbiddenException();
+    void setUp() {
+        System.out.println("setUp");
     }
+
     @AfterEach
     void tearDown() {
+        System.out.println("tearDown");
     }
 }

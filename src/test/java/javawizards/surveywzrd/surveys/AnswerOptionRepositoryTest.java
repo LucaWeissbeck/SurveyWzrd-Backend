@@ -10,12 +10,13 @@ class AnswerOptionRepositoryTest {
 
     private AnswerOptionController answeroptioncontroller;
     @BeforeEach
-    void setUp() throws Exception{
-        answeroptioncontroller = new AnswerOptionController();
+    void setUp() {
+        System.out.println("setUp");
     }
 
     @AfterEach
     void tearDown() {
+        System.out.println("tearDown");
     }
 
     @Test

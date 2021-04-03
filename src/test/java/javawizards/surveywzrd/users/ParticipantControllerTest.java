@@ -11,12 +11,13 @@ class ParticipantControllerTest {
     private ParticipantController participantcontroller;
 
     @BeforeEach
-    void setUp() throws Exception{
-     //   participantcontroller = new ParticipantController();
+    void setUp() {
+        System.out.println("setUp");
     }
 
     @AfterEach
     void tearDown() {
+        System.out.println("tearDown");
     }
 
     @Test

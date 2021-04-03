@@ -12,12 +12,13 @@ class SpringBootSwaggerConfigTest {
     private SpringBootSwaggerConfig springbootswaggerconfig;
 
     @BeforeEach
-    void setUp() throws Exception {
-        springbootswaggerconfig = new SpringBootSwaggerConfig();
+    void setUp() {
+        System.out.println("setUp");
     }
 
     @AfterEach
     void tearDown() {
+        System.out.println("tearDown");
     }
 
     @Test

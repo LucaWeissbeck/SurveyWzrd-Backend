@@ -10,10 +10,12 @@ class AnalysisUtilsTest {
 
     @BeforeEach
     void setUp() {
+        System.out.println("setUp");
     }
 
     @AfterEach
     void tearDown() {
+        System.out.println("tearDown");
     }
 
     @Test

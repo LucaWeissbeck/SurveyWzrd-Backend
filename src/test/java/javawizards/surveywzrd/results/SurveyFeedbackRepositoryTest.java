@@ -12,82 +12,13 @@ class SurveyFeedbackRepositoryTest {
 
     private SurveyFeedbackRepository surveyreedbackrepository;
     @BeforeEach
-    void setUp() throws Exception{
-        surveyreedbackrepository = new SurveyFeedbackRepository() {
-            @Override
-            public <S extends SurveyFeedback> S save(S entity) {
-                return null;
-            }
-
-            @Override
-            public <S extends SurveyFeedback> Iterable<S> saveAll(Iterable<S> entities) {
-                return null;
-            }
-
-            @Override
-            public Optional<SurveyFeedback> findById(Long aLong) {
-                return Optional.empty();
-            }
-
-            @Override
-            public boolean existsById(Long aLong) {
-                return false;
-            }
-
-            @Override
-            public Iterable<SurveyFeedback> findAll() {
-                return null;
-            }
-
-            @Override
-            public Iterable<SurveyFeedback> findAllById(Iterable<Long> longs) {
-                return null;
-            }
-
-            @Override
-            public long count() {
-                return 0;
-            }
-
-            @Override
-            public void deleteById(Long aLong) {
-
-            }
-
-            @Override
-            public void delete(SurveyFeedback entity) {
-
-            }
-
-            @Override
-            public void deleteAll(Iterable<? extends SurveyFeedback> entities) {
-
-            }
-
-            @Override
-            public void deleteAll() {
-
-            }
-
-            @Override
-            public List<SurveyFeedback> findAllBySurvey_Id(long survey_id) {
-                return null;
-            }
-
-            @Override
-            public List<SurveyFeedback> findAllByAnswerOption_Id(long answerOption_id) {
-                return null;
-            }
-
-            @Override
-            public SurveyFeedback findById(long id) {
-                return null;
-            }
-        };
+    void setUp() {
+        System.out.println("setUp");
     }
 
     @AfterEach
     void tearDown() {
+        System.out.println("tearDown");
     }
 
     @Test
