@@ -73,7 +73,7 @@ public class AdministratorController {
             throw new ServletException("Invalid login. Please check your email and password.");
         }
         String authKey = passwordEncoder.encode(administrator.getEmail()) + java.time.Clock.systemUTC().instant();
-        return authTokenRepository.save(new AuthToken(authKey, administrator));
+        return authTokenRepository.save(new AuthToken(authKey, administratorRepository.findByEmail(administrator.getEmail())));
 
     }
 
