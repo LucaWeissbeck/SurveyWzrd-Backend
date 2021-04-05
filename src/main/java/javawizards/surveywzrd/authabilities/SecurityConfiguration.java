@@ -34,7 +34,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/survey/answeroptions/public/**",
             "/analysis/public/**",
             "/surveyfeedback/public/**",
-            "/administrator/public/**"
+            "/administrator/public/**",
+            //React Whitelist
+            "/index.html",
+            "/login",
+            "/",
+            "/asset-manifest.json",
+            "/assets/**",
+            "/static/**"
 
 
     };
