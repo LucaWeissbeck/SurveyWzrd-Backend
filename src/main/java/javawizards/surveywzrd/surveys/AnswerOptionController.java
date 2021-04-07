@@ -18,8 +18,13 @@ public class AnswerOptionController {
     private AnswerOptionRepository answerOptionRepository;
 
     @GetMapping("/public/{surveyID}")
-    public List<AnswerOption> getAllAnswerOptionsBySurveyID(@PathVariable(value = "surveyID") Long surveyID) {
-        return answerOptionRepository.findAllBySurvey_id(surveyID);
+    public List<AnswerOption> getAllAnswerOptionsBySurveyID(@PathVariable(value = "surveyID") Long surveyID)
+            throws ResourceNotFoundException{
+        List<AnswerOption> ao = answerOptionRepository.findAllBySurvey_id(surveyID);
+        if (ao != null || !ao.isEmpty()){
+            return ao;
+        }
+        throw new ResourceNotFoundException("SurveyID " + surveyID + " not found");
     }
 
     @RequestMapping(value = "/{surveyID}", method = RequestMethod.POST)
@@ -32,8 +37,9 @@ public class AnswerOptionController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteAnswerOption(@PathVariable Long id) {
+    public void deleteAnswerOption(@PathVariable Long id) throws ResourceNotFoundException{
         answerOptionRepository.deleteById(id);
+        throw new ResourceNotFoundException("AnswerOptionID " + id + " not found");
 
 
     }

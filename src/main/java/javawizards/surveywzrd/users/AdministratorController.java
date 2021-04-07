@@ -20,7 +20,8 @@ public class AdministratorController {
     private final AuthTokenService authTokenService;
 
     @Autowired
-    public AdministratorController(AdministratorRepository administratorRepository, PasswordEncoder passwordEncoder, AuthTokenRepository authTokenRepository, AuthTokenService authTokenService) {
+    public AdministratorController(AdministratorRepository administratorRepository, PasswordEncoder passwordEncoder,
+                                   AuthTokenRepository authTokenRepository, AuthTokenService authTokenService) {
         this.administratorRepository = administratorRepository;
         this.passwordEncoder = passwordEncoder;
         this.authTokenRepository = authTokenRepository;
@@ -38,16 +39,26 @@ public class AdministratorController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Administrator getAdmin(@PathVariable Long id) {
-        return administratorRepository.findById(id)
-                .orElseThrow(() -> new NullPointerException(id.toString())); //AdminNotFoundException(id));
+    public Administrator getAdmin(@PathVariable Long id, @RequestHeader Map<String, String> headers)
+            throws ServletException {
+        Administrator administrator = authTokenService.authenticate(headers);
+        if (administrator.isOwner()) {
+            return administratorRepository.findById(id)
+                    .orElseThrow(() -> new NullPointerException(id.toString()));
+        }
+        throw new ServletException("You are not an owner. No access right.");
 
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Administrator addAdmin(@RequestBody Administrator administrator) {
-        administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
-        return administratorRepository.save(administrator);
+    public Administrator addAdmin(@RequestBody Administrator administrator1, @RequestHeader Map<String, String> headers)
+            throws ServletException {
+        Administrator administrator = authTokenService.authenticate(headers);
+        if (administrator.isOwner()) {
+            administrator1.setPassword(passwordEncoder.encode(administrator1.getPassword()));
+            return administratorRepository.save(administrator1);
+        }
+        throw new ServletException("You are not an owner. No access right.");
 
     }
 
@@ -78,20 +89,25 @@ public class AdministratorController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Administrator updateAdmin(@RequestBody Administrator administrator, @PathVariable Long id) {
-        return administratorRepository.findById(id)
-                .map(administrator1 -> {
-                    administrator1.setFirstName(administrator.getFirstName());
-                    administrator1.setLastName(administrator.getLastName());
-                    administrator1.setEmail(administrator.getEmail());
-                    administrator1.setPassword(passwordEncoder.encode(administrator.getPassword()));
-                    administrator1.setOwner(administrator.isOwner());
-                    return administratorRepository.save(administrator1);
-                })
-                .orElseGet(() -> {
-                    administrator.setId(id);
-                    return administratorRepository.save(administrator);
-                });
+    public Administrator updateAdmin(@RequestBody Administrator administratorRB, @PathVariable Long id,
+                                     @RequestHeader Map<String, String> headers) throws ServletException {
+        Administrator administrator = authTokenService.authenticate(headers);
+        if (administrator.isOwner()) {
+            return administratorRepository.findById(id)
+                    .map(administrator1 -> {
+                        administrator1.setFirstName(administratorRB.getFirstName());
+                        administrator1.setLastName(administratorRB.getLastName());
+                        administrator1.setEmail(administratorRB.getEmail());
+                        administrator1.setPassword(passwordEncoder.encode(administratorRB.getPassword()));
+                        administrator1.setOwner(administratorRB.isOwner());
+                        return administratorRepository.save(administrator1);
+                    })
+                    .orElseGet(() -> {
+                        administratorRB.setId(id);
+                        return administratorRepository.save(administratorRB);
+                    });
+        }
+        throw new ServletException("You are not an owner. No access right.");
 
     }
 
@@ -103,9 +119,12 @@ public class AdministratorController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteAdmin(@PathVariable Long id) {
-        administratorRepository.deleteById(id);
-
+    public void deleteAdmin(@PathVariable Long id, @RequestHeader Map<String, String> headers) throws ServletException {
+        Administrator administrator = authTokenService.authenticate(headers);
+        if (administrator.isOwner()) {
+            administratorRepository.deleteById(id);
+        }
+        throw new ServletException("You are not an owner. No access right.");
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)

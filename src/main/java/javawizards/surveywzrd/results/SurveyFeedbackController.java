@@ -2,6 +2,8 @@ package javawizards.surveywzrd.results;
 
 import javawizards.surveywzrd.surveys.AnswerOptionRepository;
 import javawizards.surveywzrd.surveys.SurveyRepository;
+import javawizards.surveywzrd.users.Administrator;
+import javawizards.surveywzrd.users.AuthTokenService;
 import javawizards.surveywzrd.users.Participant;
 import javawizards.surveywzrd.users.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -23,19 +27,24 @@ public class SurveyFeedbackController {
     private final AnswerOptionRepository answerOptionRepository;
     private final SurveyRepository surveyRepository;
     private final ParticipantService participantService;
+    private final AuthTokenService authTokenService;
 
     @Autowired
-    public SurveyFeedbackController(SurveyFeedbackRepository surveyFeedbackRepository, AnswerOptionRepository answerOptionRepository, SurveyRepository surveyRepository, ParticipantService participantService) {
+    public SurveyFeedbackController(SurveyFeedbackRepository surveyFeedbackRepository, AnswerOptionRepository answerOptionRepository, SurveyRepository surveyRepository, ParticipantService participantService, AuthTokenService authTokenService) {
         this.surveyFeedbackRepository = surveyFeedbackRepository;
         this.answerOptionRepository = answerOptionRepository;
         this.surveyRepository = surveyRepository;
         this.participantService = participantService;
+        this.authTokenService = authTokenService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<List<SurveyFeedback>> getAllSurveyFeedbacks() {
-        return new ResponseEntity<>((List<SurveyFeedback>) surveyFeedbackRepository.findAll(), HttpStatus.OK);
-
+    public ResponseEntity<List<SurveyFeedback>> getAllSurveyFeedbacks(@RequestHeader Map<String, String> headers) throws ServletException {
+        Administrator administrator = authTokenService.authenticate(headers);
+        if (administrator.isOwner()) {
+            return new ResponseEntity<>((List<SurveyFeedback>) surveyFeedbackRepository.findAll(), HttpStatus.OK);
+        }
+        throw new ServletException("You are not an owner. No access right.");
     }
 
     @RequestMapping(value = "/{survey_id}", method = RequestMethod.GET)
@@ -64,10 +73,9 @@ public class SurveyFeedbackController {
         toInsert.setTimestamp(new Date());
         surveyFeedbackRepository.save(toInsert);
 
-        return new SurveyFeedbackReceiveSingleChoice(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(toInsert.getTimestamp()),toInsert.getAnswerOption().getId(),participantPrepare.getCookieId(),participantPrepare.getBrowserLanguage());
+        return new SurveyFeedbackReceiveSingleChoice(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(toInsert.getTimestamp()), toInsert.getAnswerOption().getId(), participantPrepare.getCookieId(), participantPrepare.getBrowserLanguage());
 
     }
-
 
 
     @RequestMapping(value = "/public/multiple/{surveyID}", method = RequestMethod.POST)
@@ -87,7 +95,7 @@ public class SurveyFeedbackController {
             surveyFeedbacks.add(surveyFeedbackRepository.save(toInsert));
         }
 
-        return new SurveyFeedbackReceiveMultipleChoice(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()),surveyFeedbackReceiveMultipleChoice.getAnswerOptionIDs(),participant.getCookieId(),participant.getBrowserLanguage());
+        return new SurveyFeedbackReceiveMultipleChoice(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()), surveyFeedbackReceiveMultipleChoice.getAnswerOptionIDs(), participant.getCookieId(), participant.getBrowserLanguage());
 
     }
 
@@ -108,14 +116,20 @@ public class SurveyFeedbackController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteSurveyFeedback(@PathVariable Long id) {
-        surveyFeedbackRepository.deleteById(id);
-
+    public void deleteSurveyFeedback(@PathVariable Long id, @RequestHeader Map<String, String> headers) throws ServletException {
+        Administrator administrator = authTokenService.authenticate(headers);
+        if (administrator.isOwner()) {
+            surveyFeedbackRepository.deleteById(id);
+        }
+        throw new ServletException("You are not an owner. No access right.");
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public void deleteAll() {
-        surveyFeedbackRepository.deleteAll();
-
+    public void deleteAll(@RequestHeader Map<String, String> headers) throws ServletException {
+        Administrator administrator = authTokenService.authenticate(headers);
+        if (administrator.isOwner()) {
+            surveyFeedbackRepository.deleteAll();
+        }
+        throw new ServletException("You are not an owner. No access right.");
     }
 }

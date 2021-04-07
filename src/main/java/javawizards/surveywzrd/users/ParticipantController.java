@@ -5,29 +5,37 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
 @RequestMapping(path = "/api/participant")
 public class ParticipantController {
-    private ParticipantRepository participantRepository;
+    private final ParticipantRepository participantRepository;
+    private final AuthTokenService authTokenService;
 
     @Autowired
-    public ParticipantController(ParticipantRepository participantRepository) {
+    public ParticipantController(ParticipantRepository participantRepository, AuthTokenService authTokenService) {
         this.participantRepository = participantRepository;
+        this.authTokenService = authTokenService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<List<Participant>> getAllParticipants() {
-        return new ResponseEntity<>((List<Participant>) participantRepository.findAll(), HttpStatus.OK);
-
+    public ResponseEntity<List<Participant>> getAllParticipants(@RequestHeader Map<String, String> headers)
+            throws ServletException {
+        Administrator administrator = authTokenService.authenticate(headers);
+        if (administrator.isOwner()) {
+            return new ResponseEntity<>((List<Participant>) participantRepository.findAll(), HttpStatus.OK);
+        }
+        throw new ServletException("You are not an owner. No access right.");
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Participant getParticipant(@PathVariable Long id) {
         return participantRepository.findById(id)
-                .orElseThrow(() -> new NullPointerException(id.toString())); //SurveyNotFoundException(id));
+                .orElseThrow(() -> new NullPointerException(id.toString()));
 
     }
 
@@ -55,14 +63,23 @@ public class ParticipantController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteParticipant(@PathVariable Long id) {
-        participantRepository.deleteById(id);
+    public void deleteParticipant(@PathVariable Long id, @RequestHeader Map<String, String> headers)
+            throws ServletException {
+        Administrator administrator = authTokenService.authenticate(headers);
+        if (administrator.isOwner()) {
+            participantRepository.deleteById(id);
+        }
+        throw new ServletException("You are not an owner. No access right.");
 
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public void deleteAll() {
-        participantRepository.deleteAll();
-
+    public void deleteAll(@RequestHeader Map<String, String> headers)
+            throws ServletException {
+        Administrator administrator = authTokenService.authenticate(headers);
+        if (administrator.isOwner()) {
+            participantRepository.deleteAll();
+        }
+        throw new ServletException("You are not an owner. No access right.");
     }
 }
