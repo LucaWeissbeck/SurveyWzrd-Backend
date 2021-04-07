@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = "/administrator")
+@RequestMapping(path = "/api/administrator")
 public class AdministratorController {
     private final PasswordEncoder passwordEncoder;
     private final AdministratorRepository administratorRepository;

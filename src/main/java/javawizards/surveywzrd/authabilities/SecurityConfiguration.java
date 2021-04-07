@@ -30,18 +30,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/v2/api-docs",
             "/webjars/**",
             //public routes
-            "/survey/public/**",
-            "/survey/answeroptions/public/**",
-            "/analysis/public/**",
-            "/surveyfeedback/public/**",
-            "/administrator/public/**",
+            "/api/survey/public/**",
+            "/api/survey/answeroptions/public/**",
+            "/api/analysis/public/**",
+            "/api/surveyfeedback/public/**",
+            "/api/administrator/public/**",
             //React Whitelist
             "/index.html",
             "/login",
             "/",
             "/asset-manifest.json",
             "/assets/**",
-            "/static/**"
+            "/static/**",
+            "/overview/**",
+            "/survey/**"
 
 
     };

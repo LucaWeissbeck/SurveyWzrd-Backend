@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = "/survey")
+@RequestMapping(path = "/api/survey")
 public class SurveyController {
     private final SurveyRepository surveyRepository;
     private final AdministratorRepository administratorRepository;

@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = "/surveyfeedback")
+@RequestMapping(path = "/api/surveyfeedback")
 public class SurveyFeedbackController {
     private final SurveyFeedbackRepository surveyFeedbackRepository;
     private final AnswerOptionRepository answerOptionRepository;

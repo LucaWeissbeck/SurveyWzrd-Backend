@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = "/participant")
+@RequestMapping(path = "/api/participant")
 public class ParticipantController {
     private ParticipantRepository participantRepository;
 

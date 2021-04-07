@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = "/survey/answeroptions")
+@RequestMapping(path = "/api/survey/answeroptions")
 public class AnswerOptionController {
 
     @Autowired
@@ -34,6 +34,7 @@ public class AnswerOptionController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteAnswerOption(@PathVariable Long id) {
         answerOptionRepository.deleteById(id);
+
 
     }
 

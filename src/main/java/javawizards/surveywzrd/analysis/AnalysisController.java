@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = "/analysis")
+@RequestMapping(path = "/api/analysis")
 public class AnalysisController {
 
     AnswerOptionRepository answerOptionRepository;
