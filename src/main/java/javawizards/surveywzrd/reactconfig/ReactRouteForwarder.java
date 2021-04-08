@@ -8,10 +8,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ReactRouteForwarder {
 
         //@RequestMapping( method = {RequestMethod.OPTIONS, RequestMethod.GET}, path = {"/login", "/overview", "/", "/survey/**"} )
-    @RequestMapping(value = { "/", "/{x:[\\w\\-]+}", "/{x:^(?!api$).*$}/**/{y:[\\w\\-]+}" })
+    //@RequestMapping(value = { "/", "/{x:[\\w\\-]+}", "/{x:^(?!api$).*$}/**/{y:[\\w\\-]+}",
+    /*        "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/v2/api-docs",
+            "/webjars/**" })
         public String forwardAngularPaths() {
             return "forward:/index.html";
-        }
+        }*/
     }
 
 
