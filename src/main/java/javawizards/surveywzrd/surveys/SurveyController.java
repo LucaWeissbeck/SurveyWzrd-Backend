@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -25,15 +24,13 @@ public class SurveyController {
     private final AdministratorRepository administratorRepository;
     private final AuthTokenRepository authTokenRepository;
     private final AuthTokenService authTokenService;
-    private final AnswerOptionRepository answerOptionRepository;
 
     @Autowired
-    public SurveyController(SurveyRepository surveyRepository, AdministratorRepository administratorRepository, AuthTokenRepository authTokenRepository, AuthTokenService authTokenService, AnswerOptionRepository answerOptionRepository) {
+    public SurveyController(SurveyRepository surveyRepository, AdministratorRepository administratorRepository, AuthTokenRepository authTokenRepository, AuthTokenService authTokenService) {
         this.surveyRepository = surveyRepository;
         this.administratorRepository = administratorRepository;
         this.authTokenRepository = authTokenRepository;
         this.authTokenService = authTokenService;
-        this.answerOptionRepository = answerOptionRepository;
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
@@ -61,16 +58,10 @@ public class SurveyController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public SurveyCreateReceive addSurvey(@RequestBody SurveyCreateReceive surveyReceive, @RequestHeader Map<String, String> headers) {
+    public Survey addSurvey(@RequestBody Survey survey, @RequestHeader Map<String, String> headers) {
         Administrator administrator = authTokenService.authenticate(headers);
-        surveyReceive.getSurvey().setAdministrator(administrator);
-
-        SurveyCreateReceive surveyReceivReturned = new SurveyCreateReceive(surveyRepository.save(surveyReceive.getSurvey()), new ArrayList<>());
-        for (AnswerOption answerOption: surveyReceive.getAnswerOptions()){
-            answerOption.setSurvey(surveyRepository.findById(surveyReceivReturned.getSurvey().getId()).get());
-            surveyReceivReturned.getAnswerOptions().add(answerOptionRepository.save(answerOption));
-        }
-        return surveyReceive;
+        survey.setAdministrator(administrator);
+        return surveyRepository.save(survey);
 
     }
 
