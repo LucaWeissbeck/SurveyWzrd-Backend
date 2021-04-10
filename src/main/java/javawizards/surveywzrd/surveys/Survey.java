@@ -1,5 +1,6 @@
 package javawizards.surveywzrd.surveys;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javawizards.surveywzrd.users.Administrator;
 import javawizards.surveywzrd.users.AdministratorRepository;
@@ -22,6 +23,8 @@ public class Survey {
     @Column(name = "description")
     private String description;
     @Column(name = "expiry_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Europe/Paris")
     private String expiryDate;
     @Column(name = "question")
     private String question;
