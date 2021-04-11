@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "surveys")
@@ -25,7 +26,7 @@ public class Survey {
     @Column(name = "expiry_date")
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Europe/Paris")
-    private String expiryDate;
+    private Date expiryDate;
     @Column(name = "question")
     private String question;
     @Column(name = "multi_select")
@@ -44,7 +45,7 @@ public class Survey {
     }
 
     public Survey
-            (String name, String description, String expiryDate, String question, boolean multiSelect, String companyName) {
+            (String name, String description, Date expiryDate, String question, boolean multiSelect, String companyName) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -86,11 +87,11 @@ public class Survey {
         this.description = description;
     }
 
-    public String getExpiryDate() {
+    public Date getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(String expiryDate) {
+    public void setExpiryDate(Date expiryDate) {
         this.expiryDate = expiryDate;
     }
 

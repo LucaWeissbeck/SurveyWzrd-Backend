@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -145,7 +146,7 @@ class SurveyTest {
         field.set(pojo, "test");
 
         //when
-        final String result = pojo.getExpiryDate();
+        final Date result = pojo.getExpiryDate();
 
         //then
         assertEquals("test", result, "magic_values");
@@ -155,13 +156,14 @@ class SurveyTest {
     void setExpiryDate() throws NoSuchFieldException, IllegalAccessException {
         final Survey pojo = new Survey();
 
+        Date datetest = new Date();
         //when
-        pojo.setExpiryDate("test");
+        pojo.setExpiryDate(datetest);
 
         //then
         final Field field = pojo.getClass().getDeclaredField("expiryDate");
         field.setAccessible(true);
-        assertEquals("test", field.get(pojo), "foo");
+        assertEquals(datetest, field.get(pojo), "foo");
     }
 
     @Test
