@@ -52,7 +52,7 @@ public class ParticipantController {
                     participant1.setCookieId(participant.getCookieId());
                     participant1.setPlatform(participant.getPlatform());
                     participant1.setBrowserLanguage(participant.getBrowserLanguage());
-                    participant1.setLocation(participant.getLocation());
+                    participant1.setLocationCountry(participant.getLocationCountry());
                     return participantRepository.save(participant1);
                 })
                 .orElseGet(() -> {

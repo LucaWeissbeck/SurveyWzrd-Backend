@@ -138,12 +138,12 @@ class ParticipantTest {
     void getLocation() throws NoSuchFieldException, IllegalAccessException {
         //given
         final Participant pojo = new Participant();
-        final Field field = pojo.getClass().getDeclaredField("location");
+        final Field field = pojo.getClass().getDeclaredField("locationCountry");
         field.setAccessible(true);
         field.set(pojo, "test");
 
         //when
-        final String result = pojo.getLocation();
+        final String result = pojo.getLocationCountry();
 
         //then
         assertEquals("test", result, "magic_values");
@@ -154,10 +154,10 @@ class ParticipantTest {
         final Participant pojo = new Participant();
 
         //when
-        pojo.setLocation("test");
+        pojo.setLocationCountry("test");
 
         //then
-        final Field field = pojo.getClass().getDeclaredField("location");
+        final Field field = pojo.getClass().getDeclaredField("locationCountry");
         field.setAccessible(true);
         assertEquals("test", field.get(pojo), "foo");
     }

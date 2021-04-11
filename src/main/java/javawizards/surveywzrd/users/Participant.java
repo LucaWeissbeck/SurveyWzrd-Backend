@@ -25,13 +25,17 @@ public class Participant {
     @Column(name = "browser_language")
     private String browserLanguage;
 
-    @Column(name = "location")
-    private String location;
+    @Column(name = "location_country")
+    private String locationCountry;
+
+    @Column(name = "location_city")
+    private String locationCity;
+
 
     public Participant() {
     }
 
-    public Participant(Long id, String cookieId, String platform, String platformVersion, String deviceType, String browser, String browserType, String browserLanguage, String location) {
+    public Participant(Long id, String cookieId, String platform, String platformVersion, String deviceType, String browser, String browserType, String browserLanguage, String locationCountry, String locationCity) {
         this.id = id;
         this.cookieId = cookieId;
         this.platform = platform;
@@ -40,7 +44,8 @@ public class Participant {
         this.browser = browser;
         this.browserType = browserType;
         this.browserLanguage = browserLanguage;
-        this.location = location;
+        this.locationCountry = locationCountry;
+        this.locationCity = locationCity;
     }
 
     public Long getId() {
@@ -75,12 +80,12 @@ public class Participant {
         this.browserLanguage = browser_language;
     }
 
-    public String getLocation() {
-        return location;
+    public String getLocationCountry() {
+        return locationCountry;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLocationCountry(String location) {
+        this.locationCountry = location;
     }
 
     public String getPlatformVersion() {
@@ -113,5 +118,13 @@ public class Participant {
 
     public void setBrowserType(String browserType) {
         this.browserType = browserType;
+    }
+
+    public String getLocationCity() {
+        return locationCity;
+    }
+
+    public void setLocationCity(String locationCity) {
+        this.locationCity = locationCity;
     }
 }
