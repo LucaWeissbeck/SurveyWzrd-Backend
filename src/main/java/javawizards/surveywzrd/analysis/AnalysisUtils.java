@@ -35,18 +35,14 @@ public class AnalysisUtils {
         return returned;
     }
 
-    /*public HashMap<Long, Integer> getPublicAnalysis2(Long surveyID) {
-        List<Long> answerOptionIds = null;
-        HashMap<Long, Integer> answerCounts = null;
-        for (AnswerOption answerOption : answerOptionRepository.findAllBySurvey_id(surveyID)) {
-            answerOptionIds.add(answerOption.getId());
+    public static List<RawSurveyFeedbackDataAdmin> getRawAnalysisDataMinimizedForAdmin(List<SurveyFeedback> rawFeedback){
+        List<RawSurveyFeedbackDataAdmin> returned = new ArrayList<>();
+        for (SurveyFeedback feedback: rawFeedback){
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            returned.add(new RawSurveyFeedbackDataAdmin(feedback.getId(),
+                    formatter.format(feedback.getTimestamp()),feedback.getAnswerOption().getId(),
+                    feedback.getAnswerOption().getValue(), feedback.getParticipant().getLocationCity(), feedback.getParticipant().getLocationCountry()));
         }
-        for (Long answerId : answerOptionIds) {
-            int count = surveyFeedbackRepository.findAllByAnswerOption_Id(answerId).size();
-            answerCounts.put(answerId, count);
-
-        }
-
-        return answerCounts;
-    }*/
+        return returned;
+    }
 }
