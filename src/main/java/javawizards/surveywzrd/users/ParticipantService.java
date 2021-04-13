@@ -5,6 +5,7 @@ import com.blueconic.browscap.ParseException;
 import com.blueconic.browscap.UserAgentParser;
 import com.blueconic.browscap.UserAgentService;
 import com.maxmind.geoip2.DatabaseReader;
+import com.maxmind.geoip2.exception.AddressNotFoundException;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.util.UUID;
 
@@ -50,10 +52,11 @@ public class ParticipantService {
         }
         System.out.println(ipAddress);
 
+
         DatabaseReader dbReader = null;
 
         try {
-            File database = geoipDatabase.getFile();
+            InputStream database = geoipDatabase.getInputStream();
 
             dbReader = new DatabaseReader.Builder(database)
                     .build();

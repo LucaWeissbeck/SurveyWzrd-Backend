@@ -43,7 +43,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/assets/**",
             "/static/**",
             "/overview/**",
-            "/survey/**"
+            "/survey/**",
+            "/{x:^(?!api$).*$}/**/{y:[\\w\\-]+}"
 
 
     };
