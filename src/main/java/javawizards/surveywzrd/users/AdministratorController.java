@@ -69,6 +69,7 @@ public class AdministratorController {
 
     }
 
+    /*
     @RequestMapping(value = "/public/registerandlogin", method = RequestMethod.POST)
     public AuthToken registerAndLogAdmin(@RequestBody Administrator administrator) {
         administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
@@ -77,6 +78,7 @@ public class AdministratorController {
         return authTokenRepository.save(new AuthToken(authKey, administrator));
 
     }
+     */
 
     @RequestMapping(value = "/public/login", method = RequestMethod.POST)
     public AuthToken loginAdmin(@RequestBody Administrator administrator) throws ServletException {
