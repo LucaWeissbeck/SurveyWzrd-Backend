@@ -69,6 +69,15 @@ public class AdministratorController {
 
     }
 
+    @RequestMapping(value = "/public/registerandlogin", method = RequestMethod.POST)
+    public AuthToken registerAndLogAdmin(@RequestBody Administrator administrator) {
+        administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
+        administratorRepository.save(administrator);
+        String authKey = passwordEncoder.encode(administrator.getEmail()) + java.time.Clock.systemUTC().instant();
+        return authTokenRepository.save(new AuthToken(authKey, administrator));
+
+    }
+
     @RequestMapping(value = "/public/login", method = RequestMethod.POST)
     public AuthToken loginAdmin(@RequestBody Administrator administrator) throws ServletException {
         if (administrator.getEmail() == null || administrator.getPassword() == null) {
@@ -113,8 +122,8 @@ public class AdministratorController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.DELETE)
     public void logoutAdmin(@RequestHeader Map<String, String> headers) {
-        Administrator administrator = authTokenService.authenticate(headers);
-        authTokenRepository.deleteByAdmin(administrator);
+        //Administrator administrator = authTokenService.authenticate(headers);
+        authTokenRepository.delete(new AuthToken(headers.get("x-api-key")));
 
     }
 

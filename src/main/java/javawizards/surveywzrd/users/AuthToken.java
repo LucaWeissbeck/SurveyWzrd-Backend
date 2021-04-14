@@ -29,6 +29,10 @@ public class AuthToken {
         this.admin = admin;
     }
 
+    public AuthToken(String authKey) {
+        this.authKey = authKey;
+    }
+
     public String getAuthKey() {
         return authKey;
     }
