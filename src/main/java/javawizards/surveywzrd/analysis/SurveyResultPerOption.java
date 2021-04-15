@@ -12,6 +12,9 @@ public class SurveyResultPerOption {
         this.count = count;
     }
 
+    public SurveyResultPerOption() {
+    }
+
     public AnswerOption getAnswerOption() {
         return answerOption;
     }

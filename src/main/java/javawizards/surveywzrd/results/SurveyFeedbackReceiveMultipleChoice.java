@@ -10,6 +10,7 @@ public class SurveyFeedbackReceiveMultipleChoice extends SurveyFeedbackReceive{
         this.answerOptionIDs = answerOptionIDs;
     }
 
+
     public List<Long> getAnswerOptionIDs() {
         return answerOptionIDs;
     }

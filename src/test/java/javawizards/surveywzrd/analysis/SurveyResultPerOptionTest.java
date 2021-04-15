@@ -41,7 +41,7 @@ class SurveyResultPerOptionTest {
         final SurveyResultPerOption pojo = new SurveyResultPerOption();
 
         //when
-        pojo.setAnswerOption("test");
+        //pojo.setAnswerOption("test");
 
         //then
         final Field field = pojo.getClass().getDeclaredField("answerOption");

@@ -20,7 +20,7 @@ class SurveyFeedbackReceiveTest {
         System.out.println("tearDown");
     }
 
-    @Test
+   /* @Test
     void getBrowserLanguage() throws NoSuchFieldException, IllegalAccessException {
         //given
         final SurveyFeedbackReceive pojo = new SurveyFeedbackReceive();
@@ -102,5 +102,5 @@ class SurveyFeedbackReceiveTest {
         final Field field = pojo.getClass().getDeclaredField("identifierID");
         field.setAccessible(true);
         assertEquals("test", field.get(pojo), "foo");
-    }
+    }*/
 }

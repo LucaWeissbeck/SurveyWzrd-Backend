@@ -49,7 +49,7 @@ class AdministratorTest {
         assertEquals(123l, field.get(pojo), "foo");
     }
 
-    @Test
+   /* @Test
     void getFirstName() throws NoSuchFieldException, IllegalAccessException {
         //given
         final Administrator pojo = new Administrator();
@@ -118,7 +118,7 @@ class AdministratorTest {
 
         //then
         assertEquals("test", result, "magic_values");
-    }
+    }*/
 
     @Test
     void setEmail() throws NoSuchFieldException, IllegalAccessException {

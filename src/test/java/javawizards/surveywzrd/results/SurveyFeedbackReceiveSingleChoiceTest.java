@@ -24,7 +24,7 @@ class SurveyFeedbackReceiveSingleChoiceTest {
     @Test
     void getAnswerOptionID() throws NoSuchFieldException, IllegalAccessException {
         //given
-        final SurveyFeedbackReceiveSingleChoice pojo = new SurveyFeedbackReceiveSingleChoice();
+        final SurveyFeedbackReceiveSingleChoice pojo = new SurveyFeedbackReceiveSingleChoice("", 1L, "1", "de");
         final Field field = pojo.getClass().getDeclaredField("answerOptionID");
         field.setAccessible(true);
         field.set(pojo, 123l);
@@ -38,7 +38,7 @@ class SurveyFeedbackReceiveSingleChoiceTest {
 
     @Test
     void setAnswerOptionID() throws NoSuchFieldException, IllegalAccessException {
-        final SurveyFeedbackReceiveSingleChoice pojo = new SurveyFeedbackReceiveSingleChoice();
+        final SurveyFeedbackReceiveSingleChoice pojo = new SurveyFeedbackReceiveSingleChoice("", 1L, "1", "de");
 
         //when
         pojo.setAnswerOptionID(123l);

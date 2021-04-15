@@ -125,7 +125,7 @@ class RawSurveyFeedbackDataTest {
         final RawSurveyFeedbackData pojo = new RawSurveyFeedbackData();
 
         //when
-        pojo.setTimestamp(123l);
+        pojo.setTimestamp("123");
 
         //then
         final Field field = pojo.getClass().getDeclaredField("answerOptionID");

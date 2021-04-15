@@ -106,8 +106,6 @@ public class AdministratorController {
         if (administrator.isOwner()) {
             return administratorRepository.findById(id)
                     .map(administrator1 -> {
-                        administrator1.setFirstName(administratorRB.getFirstName());
-                        administrator1.setLastName(administratorRB.getLastName());
                         administrator1.setEmail(administratorRB.getEmail());
                         administrator1.setPassword(passwordEncoder.encode(administratorRB.getPassword()));
                         administrator1.setOwner(administratorRB.isOwner());

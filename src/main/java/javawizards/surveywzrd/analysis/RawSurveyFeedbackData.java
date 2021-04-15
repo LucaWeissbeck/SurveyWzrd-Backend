@@ -14,6 +14,9 @@ public class RawSurveyFeedbackData {
 
     }
 
+    public RawSurveyFeedbackData() {
+    }
+
     public String getValueName() {
         return valueName;
     }

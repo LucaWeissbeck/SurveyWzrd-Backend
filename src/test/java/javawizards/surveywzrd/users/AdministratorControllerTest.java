@@ -31,7 +31,7 @@ class AdministratorControllerTest {
 
     @Test
     void addAdmin() {
-        assertEquals();
+        //assertEquals();
     }
 
     @Test
@@ -44,6 +44,6 @@ class AdministratorControllerTest {
 
     @Test
     void deleteAll() {
-        assertEquals(AdministratorRepository.class, ); AdministratorRepository
+        //assertEquals(AdministratorRepository.class); AdministratorRepository
     }
 }
