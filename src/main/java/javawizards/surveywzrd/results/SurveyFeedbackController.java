@@ -65,20 +65,13 @@ public class SurveyFeedbackController {
         SurveyFeedback toInsert = new SurveyFeedback();
         Participant participantPrepare = new Participant();
         participantPrepare = participantService.addHeaderInformationToParticipant(participantPrepare, req);
-        System.out.println("test1");
         participantPrepare.setCookieId(surveyFeedbackReceiveSingleChoice.getIdentifierID());
-        System.out.println("test2");
         participantPrepare.setBrowserLanguage(surveyFeedbackReceiveSingleChoice.getBrowserLanguage());
-        System.out.println("test3");
         toInsert.setAnswerOption(answerOptionRepository.findById(surveyFeedbackReceiveSingleChoice.getAnswerOptionID()).get());
-        System.out.println("test4");
         toInsert.setSurvey(surveyRepository.findById(surveyID).get());
-        System.out.println("test5");
         toInsert.setParticipant(participantService.existsOrCreate(participantPrepare));
-        System.out.println("test6");
         toInsert.setTimestamp(new Date());
         surveyFeedbackRepository.save(toInsert);
-        System.out.println("test7");
         return new SurveyFeedbackReceiveSingleChoice(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(toInsert.getTimestamp()), toInsert.getAnswerOption().getId(), participantPrepare.getCookieId(), participantPrepare.getBrowserLanguage());
 
     }

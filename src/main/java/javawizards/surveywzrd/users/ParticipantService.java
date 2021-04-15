@@ -29,6 +29,7 @@ public class ParticipantService {
     @Autowired
     private ResourceLoader resourceLoader;
 
+    private static UserAgentParser parser;
 
     public Participant existsOrCreate(Participant participant){
         if (participantRepository.existsByCookieId(participant.getCookieId())) {
@@ -79,15 +80,14 @@ public class ParticipantService {
         }
 
         try {
-            UserAgentParser parser = new UserAgentService().loadParser();
-            final Capabilities capabilities = parser.parse(userAgentHeader);
-            final String browser = capabilities.getBrowser();
-            final String browserType = capabilities.getBrowserType();
+            if (parser == null) parser = new UserAgentService().loadParser();
+            Capabilities capabilities = parser.parse(userAgentHeader);
+            String browser = capabilities.getBrowser();
+            String browserType = capabilities.getBrowserType();
             //final String browserMajorVersion = capabilities.getBrowserMajorVersion();
-            final String deviceType = capabilities.getDeviceType();
-            final String platform = capabilities.getPlatform();
-            final String platformVersion = capabilities.getPlatformVersion();
-
+            String deviceType = capabilities.getDeviceType();
+            String platform = capabilities.getPlatform();
+            String platformVersion = capabilities.getPlatformVersion();
             participant.setPlatform(platform);
             participant.setBrowser(browser);
             participant.setBrowserType(browserType);

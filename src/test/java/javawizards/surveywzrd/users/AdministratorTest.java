@@ -104,7 +104,7 @@ class AdministratorTest {
         field.setAccessible(true);
         assertEquals("test", field.get(pojo), "foo");
     }
-
+*/
     @Test
     void getEmail() throws NoSuchFieldException, IllegalAccessException {
         //given
@@ -118,7 +118,7 @@ class AdministratorTest {
 
         //then
         assertEquals("test", result, "magic_values");
-    }*/
+    }
 
     @Test
     void setEmail() throws NoSuchFieldException, IllegalAccessException {
