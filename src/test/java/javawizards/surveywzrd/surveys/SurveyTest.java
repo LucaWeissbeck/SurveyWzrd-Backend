@@ -7,10 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 class SurveyTest {
 
     private SurveyTest surveytest;
@@ -31,26 +35,27 @@ class SurveyTest {
         final Survey pojo = new Survey();
         final Field field = pojo.getClass().getDeclaredField("administrator");
         field.setAccessible(true);
-        field.set(pojo, "test");
+        Administrator tocompare = new Administrator();
+        field.set(pojo, tocompare);
 
         //when
         final Administrator result = pojo.getAdministrator();
 
         //then
-        assertEquals("test", result, "magic_values");
+        assertEquals(tocompare, result, "magic_values");
     }
 
     @Test
     void setAdministrator() throws NoSuchFieldException, IllegalAccessException {
         final Survey pojo = new Survey();
-
+        Administrator tocompare = new Administrator();
         //when
-        pojo.setAdministrator(new Administrator());
+        pojo.setAdministrator(tocompare);
 
         //then
         final Field field = pojo.getClass().getDeclaredField("administrator");
         field.setAccessible(true);
-        assertEquals("test", field.get(pojo), "foo");
+        assertEquals(tocompare, field.get(pojo), "foo");
     }
 
     @Test
@@ -138,18 +143,20 @@ class SurveyTest {
     }
 
     @Test
-    void getExpiryDate() throws NoSuchFieldException, IllegalAccessException {
+    void getExpiryDate() throws NoSuchFieldException, IllegalAccessException, ParseException {
         //given
         final Survey pojo = new Survey();
         final Field field = pojo.getClass().getDeclaredField("expiryDate");
         field.setAccessible(true);
-        field.set(pojo, "test");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        field.set(pojo, sdf.parse("2021-04-15 09:54:31") );
 
         //when
         final Date result = pojo.getExpiryDate();
 
         //then
-        assertEquals("test", result, "magic_values");
+        assertEquals( sdf.parse("2021-04-15 09:54:31"), result, "magic_values");
     }
 
     @Test

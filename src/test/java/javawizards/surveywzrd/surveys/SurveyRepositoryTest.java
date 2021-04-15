@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 class SurveyRepositoryTest {
 
     private SurveyRepository surveyrepository;

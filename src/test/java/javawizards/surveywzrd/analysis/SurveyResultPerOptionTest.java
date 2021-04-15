@@ -4,11 +4,14 @@ import javawizards.surveywzrd.surveys.AnswerOption;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.stubbing.Answer;
 
 import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 class SurveyResultPerOptionTest {
 
     @BeforeEach
@@ -27,13 +30,14 @@ class SurveyResultPerOptionTest {
         final SurveyResultPerOption pojo = new SurveyResultPerOption();
         final Field field = pojo.getClass().getDeclaredField("answerOption");
         field.setAccessible(true);
-        field.set(pojo, "test");
+        AnswerOption tocompare = new AnswerOption();
+        field.set(pojo, tocompare);
 
         //when
         final AnswerOption result = pojo.getAnswerOption();
 
         //then
-        assertEquals("test", result, "magic_values");
+        assertEquals(tocompare, result, "magic_values");
     }
 
     @Test
@@ -41,12 +45,14 @@ class SurveyResultPerOptionTest {
         final SurveyResultPerOption pojo = new SurveyResultPerOption();
 
         //when
-        //pojo.setAnswerOption("test");
+        AnswerOption tocompare = new AnswerOption();
+
+        pojo.setAnswerOption(tocompare);
 
         //then
         final Field field = pojo.getClass().getDeclaredField("answerOption");
         field.setAccessible(true);
-        assertEquals("test", field.get(pojo), "foo");
+        assertEquals(tocompare, field.get(pojo), "foo");
     }
 
     @Test

@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 class RawSurveyFeedbackDataTest {
 
     @BeforeEach
@@ -125,11 +127,11 @@ class RawSurveyFeedbackDataTest {
         final RawSurveyFeedbackData pojo = new RawSurveyFeedbackData();
 
         //when
-        pojo.setTimestamp("123");
+        pojo.setAnswerOptionID(1L);
 
         //then
         final Field field = pojo.getClass().getDeclaredField("answerOptionID");
         field.setAccessible(true);
-        assertEquals(123l, field.get(pojo), "foo");
+        assertEquals(1L, field.get(pojo), "foo");
     }
 }

@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 class AdministratorTest {
 
     private Administrator administrator;

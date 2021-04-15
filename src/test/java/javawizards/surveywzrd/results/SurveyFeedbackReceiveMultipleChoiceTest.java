@@ -9,7 +9,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 class SurveyFeedbackReceiveMultipleChoiceTest {
 
     @BeforeEach
