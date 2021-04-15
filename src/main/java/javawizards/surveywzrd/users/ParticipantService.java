@@ -78,7 +78,6 @@ public class ParticipantService {
             e.printStackTrace();
         }
 
-
         try {
             UserAgentParser parser = new UserAgentService().loadParser();
             final Capabilities capabilities = parser.parse(userAgentHeader);

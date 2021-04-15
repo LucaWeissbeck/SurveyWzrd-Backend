@@ -1,15 +1,12 @@
 package javawizards.surveywzrd.analysis;
 
-import javawizards.surveywzrd.SurveywzrdApplication;
 import javawizards.surveywzrd.results.SurveyFeedback;
 import javawizards.surveywzrd.results.SurveyFeedbackRepository;
 import javawizards.surveywzrd.surveys.AnswerOption;
 import javawizards.surveywzrd.surveys.AnswerOptionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class AnalysisUtils {
@@ -41,7 +38,7 @@ public class AnalysisUtils {
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             returned.add(new RawSurveyFeedbackDataAdmin(feedback.getId(),
                     formatter.format(feedback.getTimestamp()),feedback.getAnswerOption().getId(),
-                    feedback.getAnswerOption().getValue(), feedback.getParticipant().getLocationCity(), feedback.getParticipant().getLocationCountry()));
+                    feedback.getAnswerOption().getValue(), feedback.getParticipant().getLocationCity(), feedback.getParticipant().getLocationCountry(), feedback.getParticipant().getId()));
         }
         return returned;
     }
