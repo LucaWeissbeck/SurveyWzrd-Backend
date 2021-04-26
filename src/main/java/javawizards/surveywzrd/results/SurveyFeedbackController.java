@@ -53,7 +53,7 @@ public class SurveyFeedbackController {
 
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/singleEntry/{id}", method = RequestMethod.GET)
     public SurveyFeedback getSurveyFeedback(@PathVariable Long id) {
         return surveyFeedbackRepository.findById(id)
                 .orElseThrow(() -> new NullPointerException(id.toString())); //SurveyNotFoundException(id));
