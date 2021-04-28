@@ -1,51 +1,83 @@
 package javawizards.surveywzrd.users;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 @ActiveProfiles("test")
-class AdministratorControllerTest {
+public class AdministratorControllerTest {
 
-    private AdministratorController administratorcontroller;
+    @Autowired
+    private MockMvc mockMvc;
 
-    @BeforeEach
-    void setUp() {
-        System.out.println("setUp");
-    }
+    @Autowired
+    private ObjectMapper objectMapper;
 
-    @AfterEach
-    void tearDown() {
-        System.out.println("tearDown");
+    @Autowired
+    private AdministratorRepository administratorRepository;
+
+    @Autowired
+    private AuthTokenRepository authTokenRepository;
+
+    @Test
+    void registrationWorksThroughAllLayers() throws Exception {
+        String email= "test@test.de";
+        Administrator user = new Administrator(email, "Test", true);
+
+        mockMvc.perform(post("/api/administrator/public/register", 42L)
+                .contentType("application/json")
+                //.param("sendWelcomeMail", "true")
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk());
+
+        Administrator adminTest = administratorRepository.findByEmail(email);
+        assertEquals(adminTest.getEmail(), email);
+
     }
 
     @Test
-    void getAllAdmins() {
+    void loginWorksThroughAllLayers() throws Exception {
+        String email= "test@test.de";
+        Administrator user = new Administrator(email, "Test", true);
+
+        mockMvc.perform(post("/api/administrator/public/login", 42L)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk()).andExpect(MockMvcResultMatchers.jsonPath("$.authToken.authKey").isNotEmpty());
+
     }
 
     @Test
-    void getAdmin() {
-        AdministratorRepository findById;
+    void logoutWorks() throws Exception {
+        String email= "test@test.de";
+        Administrator user = new Administrator(email, "Test", true);
+
+        mockMvc.perform(delete("/api/administrator/logout")
+                .contentType("application/json")
+                .header("x-api-key",authTokenRepository.findByAdminId(1L).get().getAuthKey())
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk());
+        assertEquals(authTokenRepository.findByAdminId(1L), Optional.empty());
+
     }
 
-    @Test
-    void addAdmin() {
-        //assertEquals();
-    }
-
-    @Test
-    void updateAdmin() {
-    }
-
-    @Test
-    void deleteAdmin() {
-    }
-
-    @Test
-    void deleteAll() {
-        //assertEquals(AdministratorRepository.class); AdministratorRepository
-    }
 }
