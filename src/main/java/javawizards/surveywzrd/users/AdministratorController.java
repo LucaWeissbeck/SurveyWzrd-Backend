@@ -81,7 +81,7 @@ public class AdministratorController {
      */
 
     @RequestMapping(value = "/public/login", method = RequestMethod.POST)
-    public AuthToken loginAdmin(@RequestBody Administrator administrator) throws ServletException {
+    public LoginResult loginAdmin(@RequestBody Administrator administrator) throws ServletException {
         if (administrator.getEmail() == null || administrator.getPassword() == null) {
             throw new ServletException("Please fill in username and password");
         }
@@ -95,7 +95,8 @@ public class AdministratorController {
             throw new ServletException("Invalid login. Please check your email and password.");
         }
         String authKey = passwordEncoder.encode(administrator.getEmail()) + java.time.Clock.systemUTC().instant();
-        return authTokenRepository.save(new AuthToken(authKey, administratorRepository.findByEmail(administrator.getEmail())));
+
+        return new LoginResult(authTokenRepository.save(new AuthToken(authKey, administratorRepository.findByEmail(administrator.getEmail()))), administratorRepository.findByEmail(administrator.getEmail()).isOwner());
 
     }
 
