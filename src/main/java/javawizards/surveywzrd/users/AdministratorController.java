@@ -1,5 +1,6 @@
 package javawizards.surveywzrd.users;
 
+import javawizards.surveywzrd.exceptions.ForbiddenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,36 +30,36 @@ public class AdministratorController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<List<Administrator>> getAllAdmins(@RequestHeader Map<String, String> headers) throws ServletException {
+    public ResponseEntity<List<Administrator>> getAllAdmins(@RequestHeader Map<String, String> headers)  {
         Administrator administrator = authTokenService.authenticate(headers);
         if (administrator.isOwner()) {
             return new ResponseEntity<>((List<Administrator>) administratorRepository.findAll(), HttpStatus.OK);
         }
-        throw new ServletException("You are not an owner. No access right.");
+        throw new ForbiddenException("You are not an owner. No access right.");
 
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Administrator getAdmin(@PathVariable Long id, @RequestHeader Map<String, String> headers)
-            throws ServletException {
+             {
         Administrator administrator = authTokenService.authenticate(headers);
         if (administrator.isOwner()) {
             return administratorRepository.findById(id)
                     .orElseThrow(() -> new NullPointerException(id.toString()));
         }
-        throw new ServletException("You are not an owner. No access right.");
+        throw new ForbiddenException("You are not an owner. No access right.");
 
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public Administrator addAdmin(@RequestBody Administrator administrator1, @RequestHeader Map<String, String> headers)
-            throws ServletException {
+             {
         Administrator administrator = authTokenService.authenticate(headers);
         if (administrator.isOwner()) {
             administrator1.setPassword(passwordEncoder.encode(administrator1.getPassword()));
             return administratorRepository.save(administrator1);
         }
-        throw new ServletException("You are not an owner. No access right.");
+        throw new ForbiddenException("You are not an owner. No access right.");
 
     }
 
@@ -69,30 +70,19 @@ public class AdministratorController {
 
     }
 
-    /*
-    @RequestMapping(value = "/public/registerandlogin", method = RequestMethod.POST)
-    public AuthToken registerAndLogAdmin(@RequestBody Administrator administrator) {
-        administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
-        administratorRepository.save(administrator);
-        String authKey = passwordEncoder.encode(administrator.getEmail()) + java.time.Clock.systemUTC().instant();
-        return authTokenRepository.save(new AuthToken(authKey, administrator));
-
-    }
-     */
-
     @RequestMapping(value = "/public/login", method = RequestMethod.POST)
-    public LoginResult loginAdmin(@RequestBody Administrator administrator) throws ServletException {
+    public LoginResult loginAdmin(@RequestBody Administrator administrator)  {
         if (administrator.getEmail() == null || administrator.getPassword() == null) {
-            throw new ServletException("Please fill in username and password");
+            throw new ForbiddenException("Please fill in username and password");
         }
 
         if (administratorRepository.findByEmail(administrator.getEmail()) == null) {
-            throw new ServletException("Email not found.");
+            throw new ForbiddenException("Email not found.");
         }
 
         if (!(passwordEncoder.matches(administrator.getPassword(),
                 administratorRepository.findByEmail(administrator.getEmail()).getPassword()))) {
-            throw new ServletException("Invalid login. Please check your email and password.");
+            throw new ForbiddenException("Invalid login. Please check your email and password.");
         }
         String authKey = passwordEncoder.encode(administrator.getEmail()) + java.time.Clock.systemUTC().instant();
 
@@ -102,7 +92,7 @@ public class AdministratorController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Administrator updateAdmin(@RequestBody Administrator administratorRB, @PathVariable Long id,
-                                     @RequestHeader Map<String, String> headers) throws ServletException {
+                                     @RequestHeader Map<String, String> headers)  {
         Administrator administrator = authTokenService.authenticate(headers);
         if (administrator.isOwner()) {
             return administratorRepository.findById(id)
@@ -117,7 +107,7 @@ public class AdministratorController {
                         return administratorRepository.save(administratorRB);
                     });
         }
-        throw new ServletException("You are not an owner. No access right.");
+        throw new ForbiddenException("You are not an owner. No access right.");
 
     }
 
@@ -129,21 +119,21 @@ public class AdministratorController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteAdmin(@PathVariable Long id, @RequestHeader Map<String, String> headers) throws ServletException {
+    public void deleteAdmin(@PathVariable Long id, @RequestHeader Map<String, String> headers)  {
         Administrator administrator = authTokenService.authenticate(headers);
         if (administrator.isOwner()) {
             administratorRepository.deleteById(id);
         }
-        throw new ServletException("You are not an owner. No access right.");
+        throw new ForbiddenException("You are not an owner. No access right.");
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public void deleteAll(@RequestHeader Map<String, String> headers) throws ServletException {
+    public void deleteAll(@RequestHeader Map<String, String> headers)  {
         Administrator administrator = authTokenService.authenticate(headers);
         if (administrator.isOwner()) {
             administratorRepository.deleteAll();
         }
-        throw new ServletException("You are not an owner. No access right.");
+        throw new ForbiddenException("You are not an owner. No access right.");
 
     }
 }

@@ -13,10 +13,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         @ExceptionHandler(ResourceNotFoundException.class)
         protected ResponseEntity handleNotFoundException (ResourceNotFoundException e) {
-            return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Object>("{\"error\": \"" +  e.getMessage() + "\"}", HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(ForbiddenException.class)
-    protected ResponseEntity handleForbiddenException (ResourceNotFoundException e) {
-        return new ResponseEntity<Object>(e.getMessage(), HttpStatus.FORBIDDEN);
+    protected ResponseEntity handleForbiddenException (ForbiddenException e) {
+        return new ResponseEntity<Object>("{\"error\": \"" +  e.getMessage() + "\"}", HttpStatus.FORBIDDEN);
     }
 }
