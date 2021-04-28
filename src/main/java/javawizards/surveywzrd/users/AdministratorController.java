@@ -1,13 +1,16 @@
 package javawizards.surveywzrd.users;
 
 import javawizards.surveywzrd.exceptions.ForbiddenException;
+import javawizards.surveywzrd.exceptions.GeneralException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Map;
 
@@ -66,8 +69,12 @@ public class AdministratorController {
     @RequestMapping(value = "/public/register", method = RequestMethod.POST)
     public Administrator registerAdmin(@RequestBody Administrator administrator) {
         administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
-        return administratorRepository.save(administrator);
+        try{
+            return administratorRepository.save(administrator);
 
+        } catch(DataIntegrityViolationException dataIntegrityViolationException){
+            throw new GeneralException("This email already exists. Please use another one or log in.");
+        }
     }
 
     @RequestMapping(value = "/public/login", method = RequestMethod.POST)
