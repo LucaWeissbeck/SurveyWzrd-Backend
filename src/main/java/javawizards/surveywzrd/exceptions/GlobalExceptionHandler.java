@@ -19,4 +19,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity handleForbiddenException (ForbiddenException e) {
         return new ResponseEntity<Object>("{\"error\": \"" +  e.getMessage() + "\"}", HttpStatus.FORBIDDEN);
     }
+    @ExceptionHandler(GeneralException.class)
+    protected ResponseEntity handleGeneralException (GeneralException e) {
+        return new ResponseEntity<Object>("{\"error\": \"" +  e.getMessage() + "\"}", HttpStatus.BAD_REQUEST);
+    }
 }
