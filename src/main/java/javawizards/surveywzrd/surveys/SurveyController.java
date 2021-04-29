@@ -94,7 +94,7 @@ public class SurveyController {
         Administrator administrator = authTokenService.authenticate(headers);
         Optional<Survey> survey = surveyRepository.findById(id);
         if (!survey.isPresent()) throw new ResourceNotFoundException();
-        if (!(survey.get().getAdministrator().getId() == administrator.getId()))
+        if (!((survey.get().getAdministrator().getId() == administrator.getId()) || (administrator.isOwner())))
             throw new ForbiddenException("The requesting admin has no permissions for this entity.");
         surveyRepository.deleteById(id);
 
