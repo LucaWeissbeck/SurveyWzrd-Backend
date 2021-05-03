@@ -22,12 +22,12 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Date;
 
-
+@ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@ActiveProfiles("test")
+
 public class SurveyWorkflowTest {
 
     @Autowired
