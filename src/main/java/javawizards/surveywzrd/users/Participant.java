@@ -35,7 +35,9 @@ public class Participant {
     public Participant() {
     }
 
-    public Participant(Long id, String cookieId, String platform, String platformVersion, String deviceType, String browser, String browserType, String browserLanguage, String locationCountry, String locationCity) {
+    public Participant(Long id, String cookieId, String platform, String platformVersion,
+                       String deviceType, String browser, String browserType,
+                       String browserLanguage, String locationCountry, String locationCity) {
         this.id = id;
         this.cookieId = cookieId;
         this.platform = platform;
