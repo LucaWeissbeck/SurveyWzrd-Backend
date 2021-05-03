@@ -41,72 +41,18 @@ class AnswerOptionTest {
         assertEquals(123l, result, "magic_values");
     }
 
-    @Test
-    void setId() throws NoSuchFieldException, IllegalAccessException {
-        final AnswerOption pojo = new AnswerOption();
-
-        //when
-        pojo.setId(123l);
-
-        //then
-        final Field field = pojo.getClass().getDeclaredField("id");
-        field.setAccessible(true);
-        assertEquals(123l, field.get(pojo), "foo");
-    }
-
-    @Test
-    void getValue() throws NoSuchFieldException, IllegalAccessException {
-        //given
-        final AnswerOption pojo = new AnswerOption();
-        final Field field = pojo.getClass().getDeclaredField("value");
-        field.setAccessible(true);
-        field.set(pojo, "test");
-
-        //when
-        final String result = pojo.getValue();
-
-        //then
-        assertEquals("test", result, "magic_values");
-    }
- /*
-    @Test
-    void setValue() throws NoSuchFieldException, IllegalAccessException {
-        final AnswerOption pojo = new AnswerOption();
-
-        //when
-        pojo.setId(123l);
-
-        //then
-        final Field field = pojo.getClass().getDeclaredField("value");
-        field.setAccessible(true);
-        assertEquals(123l, field.get(pojo), "foo");
-    }
-
-   @Test
-    void getSurvey() throws NoSuchFieldException, IllegalAccessException {
-        //given
-        final AnswerOption pojo = new AnswerOption();
-        final Field field = pojo.getClass().getDeclaredField("survey");
-        field.setAccessible(true);
-        field.set(pojo, "test");
-
-        //when
-        final Survey result = pojo.getSurvey();
-
-        //then
-        assertEquals("test", result, "magic_values");
-    }
 
     @Test
     void setSurvey() throws NoSuchFieldException, IllegalAccessException {
         final AnswerOption pojo = new AnswerOption();
 
+        Survey tocompare = new Survey();
         //when
-        pojo.setSurvey(new Survey());
+        pojo.setSurvey(tocompare);
 
         //then
         final Field field = pojo.getClass().getDeclaredField("survey");
         field.setAccessible(true);
-        assertEquals("test", field.get(pojo), "foo");
-    }*/
+        assertEquals(tocompare, field.get(pojo), "foo");
+    }
 }

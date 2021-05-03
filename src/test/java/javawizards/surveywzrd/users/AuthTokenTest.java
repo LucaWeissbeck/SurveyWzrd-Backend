@@ -12,8 +12,6 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class AuthTokenTest {
 
-    private AuthToken authtoken;
-
     @BeforeEach
     void setUp() {
         System.out.println("setUp");
@@ -52,31 +50,5 @@ class AuthTokenTest {
         assertEquals("test", field.get(pojo), "foo");
     }
 
-   /* @Test
-    void getAdmin() throws NoSuchFieldException, IllegalAccessException {
-        //given
-        final AuthToken pojo = new AuthToken();
-        final Field field = pojo.getClass().getDeclaredField("admin");
-        field.setAccessible(true);
-        field.set(pojo, "test");
 
-        //when
-        final Administrator result = pojo.getAdmin();
-
-        //then
-        assertEquals("test", result, "magic_values");
-    }
-
-    @Test
-    void setAdmin() throws NoSuchFieldException, IllegalAccessException {
-        final AuthToken pojo = new AuthToken();
-
-        //when
-        pojo.setAdmin();
-
-        //then
-        final Field field = pojo.getClass().getDeclaredField("admin");
-        field.setAccessible(true);
-        assertEquals("test", field.get(pojo), "foo");
-    } */
 }
