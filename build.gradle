@@ -27,7 +27,7 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    testRuntimeOnly 'com.h2database:h2'
+    testRuntimeOnly group: 'com.h2database', name: 'h2', version: '1.4.200'
 
 }
 
