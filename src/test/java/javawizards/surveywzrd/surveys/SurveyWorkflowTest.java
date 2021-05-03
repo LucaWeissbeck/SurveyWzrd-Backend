@@ -49,7 +49,9 @@ public class SurveyWorkflowTest {
 
     @BeforeEach
     void setUp() {
-        administratorRepository.save(new Administrator("test@test.de", "test", true));
+        Administrator toinsert = new Administrator("test@test.de", "test", true);
+        toinsert.setId(1L);
+        administratorRepository.save(toinsert);
         authTokenRepository.save(new AuthToken("testkey", administratorRepository.findById(1L)));
     }
 

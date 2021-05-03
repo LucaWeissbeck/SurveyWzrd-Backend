@@ -49,7 +49,9 @@ class SurveyRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        administratorRepository.save(new Administrator("test@test.de", "test", true));
+        Administrator toinsert = new Administrator("test@test.de", "test", true);
+        toinsert.setId(1L);
+        administratorRepository.save(toinsert);
         Survey surveyToInsert = new Survey("name", "description", new Date(), "question", true, "companyName");
         surveyToInsert.setAdministrator(administratorRepository.findById(1L));
         surveyRepository.save(surveyToInsert);
