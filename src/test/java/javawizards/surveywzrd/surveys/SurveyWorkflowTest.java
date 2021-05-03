@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,7 +26,7 @@ import java.util.Date;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ActiveProfiles("test")
 public class SurveyWorkflowTest {
 
@@ -45,7 +46,7 @@ public class SurveyWorkflowTest {
     private AuthTokenRepository authTokenRepository;
 
 
-    @BeforeAll
+    @BeforeEach
     void setUp() {
         administratorRepository.save(new Administrator("test@test.de", "test", true));
         authTokenRepository.save(new AuthToken("testkey", administratorRepository.findById(1L)));
