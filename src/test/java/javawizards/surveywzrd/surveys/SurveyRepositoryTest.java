@@ -43,7 +43,7 @@ class SurveyRepositoryTest {
     @Autowired
     private AdministratorRepository administratorRepository;
 
-    /*@BeforeEach
+    @BeforeEach
     void setUp() {
         administratorRepository.save(new Administrator("test@test.de", "test", true));
         Survey surveyToInsert = new Survey("name", "description", new Date(), "question", true, "companyName");
@@ -60,5 +60,5 @@ class SurveyRepositoryTest {
     void findById() {
         assertEquals(surveyRepository.findById(1).getName(), "name");
 
-    }*/
+    }
 }

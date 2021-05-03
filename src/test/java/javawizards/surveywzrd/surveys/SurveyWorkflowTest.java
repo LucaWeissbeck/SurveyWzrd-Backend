@@ -48,13 +48,18 @@ public class SurveyWorkflowTest {
 
     @BeforeEach
     void setUp() {
-        administratorRepository.save(new Administrator("test@test.de", "test", true));
-        authTokenRepository.save(new AuthToken("testkey", administratorRepository.findById(1L)));
+       /* administratorRepository.save(new Administrator("test@test.de", "test", true));
+        authTokenRepository.save(new AuthToken("testkey", administratorRepository.findById(1L)));*/
     }
 
 
     @Test
     void createSurveyWorksCompleteley() throws Exception {
+        administratorRepository.save(new Administrator("test@test.de", "test", true));
+        authTokenRepository.save(new AuthToken("testkey", administratorRepository.findById(1L)));
+
+
+
         Survey surveyToInsert = new Survey("name", "description", new Date(), "question", true, "companyName");
 
         mockMvc.perform(post("/api/survey/", 42L)
