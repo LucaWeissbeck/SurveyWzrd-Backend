@@ -29,8 +29,6 @@ import java.util.Date;
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@DataJpaTest
-@EnableJpaRepositories
 public class SurveyWorkflowTest {
 
     @Autowired

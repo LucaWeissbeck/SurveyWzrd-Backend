@@ -31,8 +31,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@DataJpaTest
-@EnableJpaRepositories
+
 class SurveyRepositoryTest {
 
 
