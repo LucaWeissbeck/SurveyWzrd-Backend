@@ -8,33 +8,43 @@ import javawizards.surveywzrd.surveys.Survey;
 import javawizards.surveywzrd.surveys.SurveyRepository;
 import javawizards.surveywzrd.users.*;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Date;
 
-@SpringBootTest
 @ActiveProfiles("test")
-class SurveywzrdTestUtils {
+@Service
+public class SurveywzrdTestUtils {
 
-    @Autowired
     private SurveyRepository surveyRepository;
 
-    @Autowired
     private AdministratorRepository administratorRepository;
 
-    @Autowired
     private AuthTokenRepository authTokenRepository;
 
-    @Autowired
     private ParticipantRepository participantRepository;
 
-    @Autowired
     private AnswerOptionRepository answerOptionRepository;
 
-    @Autowired
     private SurveyFeedbackRepository surveyFeedbackRepository;
+
+    @Autowired
+    public SurveywzrdTestUtils(SurveyRepository surveyRepository, AdministratorRepository administratorRepository, AuthTokenRepository authTokenRepository, ParticipantRepository participantRepository, AnswerOptionRepository answerOptionRepository, SurveyFeedbackRepository surveyFeedbackRepository) {
+        this.surveyRepository = surveyRepository;
+        this.administratorRepository = administratorRepository;
+        this.authTokenRepository = authTokenRepository;
+        this.participantRepository = participantRepository;
+        this.answerOptionRepository = answerOptionRepository;
+        this.surveyFeedbackRepository = surveyFeedbackRepository;
+    }
 
     public void createAdministratorAndAuthToken() {
         Administrator administrator = new Administrator("test@test.de", "test", true);
@@ -66,12 +76,12 @@ class SurveywzrdTestUtils {
                 "browserType", "browserLanguage", "locationCountry", "locationCity"));
         participantRepository.save(new Participant(3L, "cookieId", "platform", "platformVersion", "deviceType", "browser",
                 "browserType", "browserLanguage", "locationCountry", "locationCity"));
-        surveyFeedbackRepository.save(new SurveyFeedback(1L, new Date(), answerOptionRepository.findById(1L), surveyRepository.findById(1L), participantRepository.findById(1L)));
-        surveyFeedbackRepository.save(new SurveyFeedback(2L, new Date(), answerOptionRepository.findById(2L), surveyRepository.findById(1L), participantRepository.findById(1L)));
-        surveyFeedbackRepository.save(new SurveyFeedback(3L, new Date(), answerOptionRepository.findById(3L), surveyRepository.findById(1L), participantRepository.findById(1L)));
-        surveyFeedbackRepository.save(new SurveyFeedback(4L, new Date(), answerOptionRepository.findById(1L), surveyRepository.findById(1L), participantRepository.findById(2L)));
-        surveyFeedbackRepository.save(new SurveyFeedback(5L, new Date(), answerOptionRepository.findById(2L), surveyRepository.findById(1L), participantRepository.findById(2L)));
-        surveyFeedbackRepository.save(new SurveyFeedback(6L, new Date(), answerOptionRepository.findById(3L), surveyRepository.findById(1L), participantRepository.findById(3L)));
+        surveyFeedbackRepository.save(new SurveyFeedback(1L, new Date(), answerOptionRepository.findById(1L).get(), surveyRepository.findById(1L), participantRepository.findById(1L)));
+        surveyFeedbackRepository.save(new SurveyFeedback(2L, new Date(), answerOptionRepository.findById(2L).get(), surveyRepository.findById(1L), participantRepository.findById(1L)));
+        surveyFeedbackRepository.save(new SurveyFeedback(3L, new Date(), answerOptionRepository.findById(3L).get(), surveyRepository.findById(1L), participantRepository.findById(1L)));
+        surveyFeedbackRepository.save(new SurveyFeedback(4L, new Date(), answerOptionRepository.findById(1L).get(), surveyRepository.findById(1L), participantRepository.findById(2L)));
+        surveyFeedbackRepository.save(new SurveyFeedback(5L, new Date(), answerOptionRepository.findById(2L).get(), surveyRepository.findById(1L), participantRepository.findById(2L)));
+        surveyFeedbackRepository.save(new SurveyFeedback(6L, new Date(), answerOptionRepository.findById(3L).get(), surveyRepository.findById(1L), participantRepository.findById(3L)));
     }
 
 }

@@ -1,6 +1,7 @@
 package javawizards.surveywzrd.surveys;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javawizards.surveywzrd.SurveywzrdTestUtils;
 import javawizards.surveywzrd.users.Administrator;
 import javawizards.surveywzrd.users.AdministratorRepository;
 import javawizards.surveywzrd.users.AuthToken;
@@ -50,13 +51,13 @@ public class SurveyWorkflowTest {
     @Autowired
     private AuthTokenRepository authTokenRepository;
 
+    @Autowired
+    private SurveywzrdTestUtils surveywzrdTestUtils;
 
     @BeforeEach
     void setUp() {
-        Administrator toinsert = new Administrator("test@test.de", "test", true);
-        toinsert.setId(1L);
-        administratorRepository.save(toinsert);
-        authTokenRepository.save(new AuthToken("testkey", administratorRepository.findById(1L)));
+        surveywzrdTestUtils.createAdministratorAndAuthToken();
+
     }
 
 
@@ -81,27 +82,31 @@ public class SurveyWorkflowTest {
         surveyToInsert.setAdministrator(administratorRepository.findById(1L));
         surveyRepository.save(surveyToInsert);
 
-        AnswerOption answerOptionToInsert = new AnswerOption("Schokolade");
+        AnswerOption answerOptionToInsert1 = new AnswerOption("Schokolade");
 
         mockMvc.perform(post("/api/survey/answeroptions/1")
                 .contentType("application/json")
                 .header("x-api-key",authTokenRepository.findByAdminId(1L).get().getAuthKey())
-                .content(objectMapper.writeValueAsString(answerOptionToInsert)))
-                .andExpect(status().isOk());
-        answerOptionToInsert.setValue("Vanille");
-        mockMvc.perform(post("/api/survey/answeroptions/1")
-                .contentType("application/json")
-                .header("x-api-key",authTokenRepository.findByAdminId(1L).get().getAuthKey())
-                .content(objectMapper.writeValueAsString(answerOptionToInsert)))
-                .andExpect(status().isOk());
-        answerOptionToInsert.setValue("Straciatella");
-        mockMvc.perform(post("/api/survey/answeroptions/1")
-                .contentType("application/json")
-                .header("x-api-key",authTokenRepository.findByAdminId(1L).get().getAuthKey())
-                .content(objectMapper.writeValueAsString(answerOptionToInsert)))
+                .content(objectMapper.writeValueAsString(answerOptionToInsert1)))
                 .andExpect(status().isOk());
 
-        System.out.println(answerOptionRepository.findAllBySurvey_id(1L));
+        AnswerOption answerOptionToInsert2 = new AnswerOption("Vanille");
+        mockMvc.perform(post("/api/survey/answeroptions/1")
+                .contentType("application/json")
+                .header("x-api-key",authTokenRepository.findByAdminId(1L).get().getAuthKey())
+                .content(objectMapper.writeValueAsString(answerOptionToInsert2)))
+                .andExpect(status().isOk());
+
+        AnswerOption answerOptionToInsert3 = new AnswerOption("Stracciatella");
+        mockMvc.perform(post("/api/survey/answeroptions/1")
+                .contentType("application/json")
+                .header("x-api-key",authTokenRepository.findByAdminId(1L).get().getAuthKey())
+                .content(objectMapper.writeValueAsString(answerOptionToInsert3)))
+                .andExpect(status().isOk());
+
+        assertEquals(answerOptionRepository.findById(1L).get().getValue(), answerOptionToInsert1.getValue());
+        assertEquals(answerOptionRepository.findById(2L).get().getValue(), answerOptionToInsert2.getValue());
+        assertEquals(answerOptionRepository.findById(3L).get().getValue(), answerOptionToInsert3.getValue());
 
     }
 

@@ -41,7 +41,7 @@ class ParticipantControllerTest {
 
 
     @Test
-    void registrationWorksThroughAllLayers() throws Exception {
+    void registrationWorksThroughAllLayers() {
         Long id = 123L;
         Participant user = new Participant( 123L,  "cookieId",  "platform",  "platformVersion",
                 "deviceType",  "browser",  "browserType",  "browserLanguage"

@@ -13,6 +13,5 @@ import java.util.Optional;
 public interface AnswerOptionRepository extends JpaRepository<AnswerOption, Long> {
     List<AnswerOption> findAllBySurvey_id(Long surveyID);
     Optional<AnswerOption> findByIdAndSurveyId(Long id, Long surveyID);
-    AnswerOption findById(long id);
 }
 

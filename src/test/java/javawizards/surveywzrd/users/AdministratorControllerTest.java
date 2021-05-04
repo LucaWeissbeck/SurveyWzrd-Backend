@@ -1,6 +1,7 @@
 package javawizards.surveywzrd.users;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javawizards.surveywzrd.surveys.SurveyWorkflowTest;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,6 +35,7 @@ public class AdministratorControllerTest {
 
     @Autowired
     private AdministratorRepository administratorRepository;
+
 
     @Autowired
     private AuthTokenRepository authTokenRepository;
