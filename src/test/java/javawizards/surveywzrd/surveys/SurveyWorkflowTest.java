@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -44,6 +45,9 @@ public class SurveyWorkflowTest {
     private AdministratorRepository administratorRepository;
 
     @Autowired
+    private AnswerOptionRepository answerOptionRepository;
+
+    @Autowired
     private AuthTokenRepository authTokenRepository;
 
 
@@ -57,13 +61,12 @@ public class SurveyWorkflowTest {
 
 
     @Test
-    void createSurveyWorksCompleteley() throws Exception {
+    void createSurveyWorksCompletely() throws Exception {
         Survey surveyToInsert = new Survey("name", "description", new Date(), "question", true, "companyName");
 
-        mockMvc.perform(post("/api/survey/", 42L)
+        mockMvc.perform(post("/api/survey/")
                 .contentType("application/json")
                 .header("x-api-key",authTokenRepository.findByAdminId(1L).get().getAuthKey())
-                //.param("sendWelcomeMail", "true")
                 .content(objectMapper.writeValueAsString(surveyToInsert)))
                 .andExpect(status().isOk());
 
@@ -74,6 +77,31 @@ public class SurveyWorkflowTest {
 
     @Test
     void testSurveyAnswerOptions() throws Exception {
+        Survey surveyToInsert = new Survey("name", "description", new Date(), "question", true, "companyName");
+        surveyToInsert.setAdministrator(administratorRepository.findById(1L));
+        surveyRepository.save(surveyToInsert);
+
+        AnswerOption answerOptionToInsert = new AnswerOption("Schokolade");
+
+        mockMvc.perform(post("/api/survey/answeroptions/1")
+                .contentType("application/json")
+                .header("x-api-key",authTokenRepository.findByAdminId(1L).get().getAuthKey())
+                .content(objectMapper.writeValueAsString(answerOptionToInsert)))
+                .andExpect(status().isOk());
+        answerOptionToInsert.setValue("Vanille");
+        mockMvc.perform(post("/api/survey/answeroptions/1")
+                .contentType("application/json")
+                .header("x-api-key",authTokenRepository.findByAdminId(1L).get().getAuthKey())
+                .content(objectMapper.writeValueAsString(answerOptionToInsert)))
+                .andExpect(status().isOk());
+        answerOptionToInsert.setValue("Straciatella");
+        mockMvc.perform(post("/api/survey/answeroptions/1")
+                .contentType("application/json")
+                .header("x-api-key",authTokenRepository.findByAdminId(1L).get().getAuthKey())
+                .content(objectMapper.writeValueAsString(answerOptionToInsert)))
+                .andExpect(status().isOk());
+
+        System.out.println(answerOptionRepository.findAllBySurvey_id(1L));
 
     }
 

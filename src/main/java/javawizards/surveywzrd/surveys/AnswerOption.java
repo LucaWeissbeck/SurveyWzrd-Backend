@@ -33,7 +33,9 @@ public class AnswerOption {
         this.id = id;
         this.value = value;
     }
-
+    public AnswerOption( String value) {
+        this.value = value;
+    }
 
     public Long getId() {
         return id;
