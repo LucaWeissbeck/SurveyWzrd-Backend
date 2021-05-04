@@ -46,27 +46,33 @@ public class SurveywzrdTestUtils {
         this.surveyFeedbackRepository = surveyFeedbackRepository;
     }
 
-    public void createAdministratorAndAuthToken() {
-        Administrator administrator = new Administrator("test@test.de", "test", true);
-        administrator.setId(1L);
+    public void createAdministratorAndAuthToken(long adminID, String email) {
+        if (email == null) email = "test@test.de";
+        Administrator administrator = new Administrator(email, "test", false);
+        administrator.setId(adminID);
         administratorRepository.save(administrator);
-        authTokenRepository.save(new AuthToken("testkey", administratorRepository.findById(1L)));
+        authTokenRepository.save(new AuthToken(email, administratorRepository.findById(adminID)));
+
     }
 
-    public void createSurveyAnd3AnswerOptions() {
+    public void createSurveyAnd3AnswerOptions(long adminID, long surveyID) {
         Survey survey = new Survey("name", "description", new Date(), "question", true, "companyName");
-        survey.setId(1L);
-        survey.setAdministrator(administratorRepository.findById(1L));
+        survey.setId(surveyID);
+        survey.setAdministrator(administratorRepository.findById(adminID));
         surveyRepository.save(survey);
-        AnswerOption answerOption1 = new AnswerOption(1L, "value 1");
-        AnswerOption answerOption2 = new AnswerOption(2L, "value 2");
-        AnswerOption answerOption3 = new AnswerOption(3L, "value 3");
-        answerOption1.setSurvey(surveyRepository.findById(1L));
-        answerOption2.setSurvey(surveyRepository.findById(1L));
-        answerOption3.setSurvey(surveyRepository.findById(1L));
+        AnswerOption answerOption1 = new AnswerOption(surveyID, "value 1");
+        AnswerOption answerOption2 = new AnswerOption(surveyID, "value 2");
+        AnswerOption answerOption3 = new AnswerOption(surveyID, "value 3");
+        answerOption1.setSurvey(surveyRepository.findById(surveyID));
+        answerOption2.setSurvey(surveyRepository.findById(surveyID));
+        answerOption3.setSurvey(surveyRepository.findById(surveyID));
         answerOptionRepository.save(answerOption1);
         answerOptionRepository.save(answerOption2);
         answerOptionRepository.save(answerOption3);
+    }
+
+    public AuthToken getAuthTokenForAdmin(long id){
+        return authTokenRepository.findByAdminId(1L).get();
     }
 
     public void vote() {

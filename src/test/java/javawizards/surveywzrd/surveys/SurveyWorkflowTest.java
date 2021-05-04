@@ -56,7 +56,7 @@ public class SurveyWorkflowTest {
 
     @BeforeEach
     void setUp() {
-        surveywzrdTestUtils.createAdministratorAndAuthToken();
+        surveywzrdTestUtils.createAdministratorAndAuthToken(1L, null);
 
     }
 
