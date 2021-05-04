@@ -7,6 +7,7 @@ import javawizards.surveywzrd.surveys.SurveyRepository;
 import javawizards.surveywzrd.users.AdministratorRepository;
 import javawizards.surveywzrd.users.AuthTokenRepository;
 import javawizards.surveywzrd.users.ParticipantRepository;
+import org.json.JSONArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,10 +19,12 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
@@ -51,11 +54,9 @@ public class AnalysisWorkflowTest {
         mockMvc.perform(get("/api/analysis/public/rawdata/{surveyID}", 1L)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-                //.andExpect(jsonPath("$.accountId").value(12345))
-                //.andExpect(jsonPath("$.accountType").value("SAVINGS"))
-                //.andExpect(jsonPath("$.balance").value(5000.0));
-
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(6)));
     }
 
     @Test
