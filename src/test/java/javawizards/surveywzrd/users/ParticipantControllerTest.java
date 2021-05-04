@@ -1,6 +1,12 @@
 package javawizards.surveywzrd.users;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javawizards.surveywzrd.SurveywzrdTestUtils;
+import javawizards.surveywzrd.results.SurveyFeedback;
+import javawizards.surveywzrd.results.SurveyFeedbackReceiveMultipleChoice;
+import javawizards.surveywzrd.results.SurveyFeedbackRepository;
+import javawizards.surveywzrd.surveys.AnswerOptionRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,17 +17,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ParticipantControllerTest {
 
     private ParticipantController participantcontroller;
@@ -34,30 +47,36 @@ class ParticipantControllerTest {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private AdministratorRepository administratorRepository;
+    SurveywzrdTestUtils surveywzrdTestUtils;
 
     @Autowired
     private ParticipantRepository participantRepository;
 
+    @Autowired
+    SurveyFeedbackRepository surveyFeedbackRepository;
+
+    @Autowired
+    AnswerOptionRepository answerOptionRepository;
 
     @Test
-    void registrationWorksThroughAllLayers() {
-        Long id = 123L;
-        Participant user = new Participant( 123L,  "cookieId",  "platform",  "platformVersion",
+    void giveSurveyFeedbackWorksThroughAllLayers() throws Exception {
+        surveywzrdTestUtils.createAdministratorAndAuthToken(1L,null);
+        surveywzrdTestUtils.createSurveyAnd3AnswerOptions(1L,1L);
+        Participant user = new Participant( 123L,  "cookieId",  "Windows",  "platformVersion",
                 "deviceType",  "browser",  "browserType",  "browserLanguage"
-                ,  "locationCountry",  "locationCity");
+                ,  "Stuttgart",  "Germany");
 
-       /* mockMvc.perform(post("/api/participant/public/register", 42L)
+        SurveyFeedbackReceiveMultipleChoice totest = new SurveyFeedbackReceiveMultipleChoice(null, Arrays.asList(1L,2L),null,"de");
+        mockMvc.perform(post("/api/surveyfeedback/public/multiple/1")
+                .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0")
+                .header("X-Forwarded-For", "141.72.229.175")
                 .contentType("application/json")
-                .content(objectMapper.writeValueAsString(user)))
+                .content(objectMapper.writeValueAsString(totest)))
                 .andExpect(status().isOk());
 
-        Participant participantTest = participantRepository.findById(id).get(); //static error
-        assertEquals(participantTest.getId(), id); */
-    }
+        assertEquals(answerOptionRepository.findById(surveyFeedbackRepository.findById(1L).getAnswerOption().getId()).get().getValue(), "value 1");
+        assertEquals(participantRepository.findById(1L).getLocationCity(), "Stuttgart");
 
-    void loginWorksThroughAllLayers() throws Exception {
-        Long id = 123L;
 
 
     }

@@ -65,7 +65,9 @@ public class SurveywzrdTestUtils {
         AnswerOption answerOption3 = new AnswerOption(surveyID, "value 3");
         answerOption1.setSurvey(surveyRepository.findById(surveyID));
         answerOption2.setSurvey(surveyRepository.findById(surveyID));
+        answerOption2.setId(2L);
         answerOption3.setSurvey(surveyRepository.findById(surveyID));
+        answerOption3.setId(3L);
         answerOptionRepository.save(answerOption1);
         answerOptionRepository.save(answerOption2);
         answerOptionRepository.save(answerOption3);
