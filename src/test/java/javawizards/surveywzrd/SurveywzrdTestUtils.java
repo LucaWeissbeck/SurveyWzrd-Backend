@@ -74,7 +74,7 @@ public class SurveywzrdTestUtils {
     }
 
     public AuthToken getAuthTokenForAdmin(long id){
-        return authTokenRepository.findByAdminId(1L).get();
+        return authTokenRepository.findByAdminId(id).get();
     }
 
     public void vote() {

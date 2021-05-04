@@ -32,8 +32,8 @@ public class AnalysisController {
     @RequestMapping(value = "/public/minimizedrawdata/{surveyID}", method = RequestMethod.GET)
     public List<RawSurveyFeedbackData> getMinimizedSurveyRawResults(@PathVariable Long surveyID) {
         return AnalysisUtils.getRawAnalysisDataMinimized(surveyFeedbackRepository.findAllBySurvey_Id(surveyID));
-
     }
+
     @RequestMapping(value = "/public/rawdata/{surveyID}", method = RequestMethod.GET)
     public List<RawSurveyFeedbackDataAdmin> getMinimizedSurveyRawResultsForAdmin(@PathVariable Long surveyID) {
         return AnalysisUtils.getRawAnalysisDataMinimizedForAdmin(surveyFeedbackRepository.findAllBySurvey_Id(surveyID));
