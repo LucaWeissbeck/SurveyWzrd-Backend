@@ -31,7 +31,7 @@ class ResourceNotFoundExceptionTest {
 
     @Test
     void ResourceNotFoundException() throws Exception{
-        mockMvc.perform(get("/api/survey/getAll"))
+        mockMvc.perform(get("/api/survey/public/1"))
                 .andExpect(status().isNotFound());
     }
 
