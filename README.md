@@ -1,4 +1,4 @@
-# Survey Wzrds Repo for Frontend and Backend
+# Survey Wzrds Repo for the Backend
 
 ## Backend
 
