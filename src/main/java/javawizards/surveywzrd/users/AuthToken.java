@@ -1,14 +1,13 @@
 package javawizards.surveywzrd.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javawizards.surveywzrd.surveys.Survey;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="auth_tokens")
+@Table(name = "auth_tokens")
 public class AuthToken {
 
     @Column(name = "auth_key")

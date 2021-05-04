@@ -6,7 +6,7 @@ public class LoginResult {
     private boolean isOwner;
 
 
-    public LoginResult(AuthToken authToken, boolean isOwner){
+    public LoginResult(AuthToken authToken, boolean isOwner) {
         this.authToken = authToken;
         this.isOwner = isOwner;
     }

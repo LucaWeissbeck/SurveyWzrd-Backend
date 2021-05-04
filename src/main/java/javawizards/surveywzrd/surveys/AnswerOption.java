@@ -26,14 +26,16 @@ public class AnswerOption {
     @JsonIgnore
     private Survey survey;
 
-    public AnswerOption(){
+    public AnswerOption() {
 
     }
+
     public AnswerOption(Long id, String value) {
         this.id = id;
         this.value = value;
     }
-    public AnswerOption( String value) {
+
+    public AnswerOption(String value) {
         this.value = value;
     }
 
@@ -52,6 +54,7 @@ public class AnswerOption {
     public void setValue(String value) {
         this.value = value;
     }
+
     public Survey getSurvey() {
         return survey;
     }

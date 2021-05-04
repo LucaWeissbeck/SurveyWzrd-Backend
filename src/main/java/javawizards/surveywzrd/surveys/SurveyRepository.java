@@ -8,5 +8,6 @@ import java.util.List;
 @Repository
 public interface SurveyRepository extends CrudRepository<Survey, Long> {
     List<Survey> findAllByAdministrator_Id(Long id);
+
     Survey findById(long id);
 }

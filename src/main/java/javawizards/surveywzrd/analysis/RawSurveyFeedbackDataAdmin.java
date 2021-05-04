@@ -1,6 +1,6 @@
 package javawizards.surveywzrd.analysis;
 
-public class RawSurveyFeedbackDataAdmin extends RawSurveyFeedbackData{
+public class RawSurveyFeedbackDataAdmin extends RawSurveyFeedbackData {
     private String locationCity;
     private String locationCountry;
     private Long participantID;

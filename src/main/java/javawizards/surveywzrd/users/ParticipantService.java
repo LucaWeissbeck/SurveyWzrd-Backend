@@ -5,7 +5,6 @@ import com.blueconic.browscap.ParseException;
 import com.blueconic.browscap.UserAgentParser;
 import com.blueconic.browscap.UserAgentService;
 import com.maxmind.geoip2.DatabaseReader;
-import com.maxmind.geoip2.exception.AddressNotFoundException;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
@@ -31,7 +29,7 @@ public class ParticipantService {
 
     private static UserAgentParser parser;
 
-    public Participant existsOrCreate(Participant participant){
+    public Participant existsOrCreate(Participant participant) {
         if (participantRepository.existsByCookieId(participant.getCookieId())) {
             return participantRepository.findByCookieId(participant.getCookieId());
         } else {
@@ -40,14 +38,14 @@ public class ParticipantService {
         }
     }
 
-    public Participant addHeaderInformationToParticipant(Participant participant, HttpServletRequest req){
+    public Participant addHeaderInformationToParticipant(Participant participant, HttpServletRequest req) {
 
         final Resource geoipDatabase = resourceLoader.getResource("classpath:GeoLite2-City.mmdb");
 
         String userAgentHeader = req.getHeader("User-Agent");
         String ipAddress = req.getHeader("X-Forwarded-For");
 
-        if(ipAddress== null){
+        if (ipAddress == null) {
 
             ipAddress = req.getRemoteAddr();
         }

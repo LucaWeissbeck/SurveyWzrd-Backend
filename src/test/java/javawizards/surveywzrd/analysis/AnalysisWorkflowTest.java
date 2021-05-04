@@ -1,13 +1,6 @@
 package javawizards.surveywzrd.analysis;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javawizards.surveywzrd.SurveywzrdTestUtils;
-import javawizards.surveywzrd.surveys.AnswerOptionRepository;
-import javawizards.surveywzrd.surveys.SurveyRepository;
-import javawizards.surveywzrd.users.AdministratorRepository;
-import javawizards.surveywzrd.users.AuthTokenRepository;
-import javawizards.surveywzrd.users.ParticipantRepository;
-import org.json.JSONArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,9 +12,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;

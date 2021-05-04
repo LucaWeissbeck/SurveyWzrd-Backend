@@ -4,7 +4,6 @@ import javawizards.surveywzrd.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletException;
 import java.util.List;
 
 @RestController
@@ -21,10 +20,10 @@ public class AnswerOptionController {
     @GetMapping("/public/{surveyID}")
     public List<AnswerOption> getAllAnswerOptionsBySurveyID(@PathVariable(value = "surveyID") Long surveyID) {
         List<AnswerOption> ao = answerOptionRepository.findAllBySurvey_id(surveyID);
-        if (!ao.isEmpty()){
+        if (!ao.isEmpty()) {
             return ao;
         }
-         throw new ResourceNotFoundException("SurveyID " + surveyID + " not found");
+        throw new ResourceNotFoundException("SurveyID " + surveyID + " not found");
     }
 
     @RequestMapping(value = "/{surveyID}", method = RequestMethod.POST)
@@ -37,7 +36,7 @@ public class AnswerOptionController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteAnswerOption(@PathVariable Long id) throws ResourceNotFoundException{
+    public void deleteAnswerOption(@PathVariable Long id) throws ResourceNotFoundException {
         answerOptionRepository.deleteById(id);
         throw new ResourceNotFoundException("AnswerOptionID " + id + " not found");
 

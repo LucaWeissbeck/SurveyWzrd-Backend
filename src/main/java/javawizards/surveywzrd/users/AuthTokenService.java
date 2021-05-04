@@ -13,7 +13,7 @@ public class AuthTokenService {
     @Autowired
     private AdministratorRepository administratorRepository;
 
-    public Administrator authenticate(Map<String, String> headers){
+    public Administrator authenticate(Map<String, String> headers) {
         return administratorRepository.findById
                 (authTokenRepository.findByauthKey(headers.get("x-api-key")).get().getAdmin().getId()).get();
     }

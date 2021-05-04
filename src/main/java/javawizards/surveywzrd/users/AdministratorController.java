@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +31,7 @@ public class AdministratorController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<List<Administrator>> getAllAdmins(@RequestHeader Map<String, String> headers)  {
+    public ResponseEntity<List<Administrator>> getAllAdmins(@RequestHeader Map<String, String> headers) {
         Administrator administrator = authTokenService.authenticate(headers);
         if (administrator.isOwner()) {
             return new ResponseEntity<>((List<Administrator>) administratorRepository.findAll(), HttpStatus.OK);
@@ -43,8 +41,7 @@ public class AdministratorController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Administrator getAdmin(@PathVariable Long id, @RequestHeader Map<String, String> headers)
-             {
+    public Administrator getAdmin(@PathVariable Long id, @RequestHeader Map<String, String> headers) {
         Administrator administrator = authTokenService.authenticate(headers);
         if (administrator.isOwner()) {
             return administratorRepository.findById(id)
@@ -55,8 +52,7 @@ public class AdministratorController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Administrator addAdmin(@RequestBody Administrator administrator1, @RequestHeader Map<String, String> headers)
-             {
+    public Administrator addAdmin(@RequestBody Administrator administrator1, @RequestHeader Map<String, String> headers) {
         Administrator administrator = authTokenService.authenticate(headers);
         if (administrator.isOwner()) {
             administrator1.setPassword(passwordEncoder.encode(administrator1.getPassword()));
@@ -69,16 +65,16 @@ public class AdministratorController {
     @RequestMapping(value = "/public/register", method = RequestMethod.POST)
     public Administrator registerAdmin(@RequestBody Administrator administrator) {
         administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
-        try{
+        try {
             return administratorRepository.save(administrator);
 
-        } catch(DataIntegrityViolationException dataIntegrityViolationException){
+        } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             throw new GeneralException("This email already exists. Please use another one or log in.");
         }
     }
 
     @RequestMapping(value = "/public/login", method = RequestMethod.POST)
-    public LoginResult loginAdmin(@RequestBody Administrator administrator)  {
+    public LoginResult loginAdmin(@RequestBody Administrator administrator) {
         if (administrator.getEmail() == null || administrator.getPassword() == null) {
             throw new ForbiddenException("Please fill in username and password");
         }
@@ -99,7 +95,7 @@ public class AdministratorController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Administrator updateAdmin(@RequestBody Administrator administratorRB, @PathVariable Long id,
-                                     @RequestHeader Map<String, String> headers)  {
+                                     @RequestHeader Map<String, String> headers) {
         Administrator administrator = authTokenService.authenticate(headers);
         if (administrator.isOwner()) {
             return administratorRepository.findById(id)
@@ -126,7 +122,7 @@ public class AdministratorController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteAdmin(@PathVariable Long id, @RequestHeader Map<String, String> headers)  {
+    public void deleteAdmin(@PathVariable Long id, @RequestHeader Map<String, String> headers) {
         Administrator administrator = authTokenService.authenticate(headers);
         if (administrator.isOwner()) {
             administratorRepository.deleteById(id);
@@ -135,7 +131,7 @@ public class AdministratorController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public void deleteAll(@RequestHeader Map<String, String> headers)  {
+    public void deleteAll(@RequestHeader Map<String, String> headers) {
         Administrator administrator = authTokenService.authenticate(headers);
         if (administrator.isOwner()) {
             administratorRepository.deleteAll();

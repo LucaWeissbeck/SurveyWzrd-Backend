@@ -1,18 +1,17 @@
 package javawizards.surveywzrd.surveys;
 
 import javawizards.surveywzrd.users.Administrator;
-import javawizards.surveywzrd.users.Participant;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.springframework.test.context.ActiveProfiles;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ActiveProfiles("test")
 class SurveyTest {
@@ -150,13 +149,13 @@ class SurveyTest {
         field.setAccessible(true);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        field.set(pojo, sdf.parse("2021-04-15 09:54:31") );
+        field.set(pojo, sdf.parse("2021-04-15 09:54:31"));
 
         //when
         final Date result = pojo.getExpiryDate();
 
         //then
-        assertEquals( sdf.parse("2021-04-15 09:54:31"), result, "magic_values");
+        assertEquals(sdf.parse("2021-04-15 09:54:31"), result, "magic_values");
     }
 
     @Test

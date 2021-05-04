@@ -8,8 +8,6 @@ import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger.web.ApiKeyVehicle;
-import springfox.documentation.swagger.web.SecurityConfiguration;
 
 import java.util.Collections;
 
@@ -26,6 +24,7 @@ public class SpringBootSwaggerConfig {
                 .securitySchemes(Collections.singletonList(apiKey()))
                 .securityContexts(Collections.singletonList(xAuthTokenSecurityContext()));
     }
+
     private ApiInfo getApiInformation() {
         return new ApiInfo("SurveyWzrd",
                 "SurveyWzrd Backend Developed by Kathrin und Daniel, Tests by Mauritz",
@@ -38,6 +37,7 @@ public class SpringBootSwaggerConfig {
         );
 
     }
+
     private SecurityContext xAuthTokenSecurityContext() {
         return SecurityContext.builder()
                 .securityReferences(Collections.singletonList(

@@ -7,16 +7,9 @@ import javawizards.surveywzrd.surveys.AnswerOptionRepository;
 import javawizards.surveywzrd.surveys.Survey;
 import javawizards.surveywzrd.surveys.SurveyRepository;
 import javawizards.surveywzrd.users.*;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Date;
 
@@ -73,7 +66,7 @@ public class SurveywzrdTestUtils {
         answerOptionRepository.save(answerOption3);
     }
 
-    public AuthToken getAuthTokenForAdmin(long id){
+    public AuthToken getAuthTokenForAdmin(long id) {
         return authTokenRepository.findByAdminId(id).get();
     }
 

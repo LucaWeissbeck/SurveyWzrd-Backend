@@ -1,9 +1,6 @@
 package javawizards.surveywzrd.results;
 
-import javawizards.surveywzrd.surveys.AnswerOption;
-import javawizards.surveywzrd.users.Participant;
-
-public class SurveyFeedbackReceiveSingleChoice extends SurveyFeedbackReceive{
+public class SurveyFeedbackReceiveSingleChoice extends SurveyFeedbackReceive {
     private Long answerOptionID;
 
     public SurveyFeedbackReceiveSingleChoice(String timestamp, Long answerOptionID, String identifierID, String browserLanguage) {

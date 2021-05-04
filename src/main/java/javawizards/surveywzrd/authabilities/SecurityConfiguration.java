@@ -1,6 +1,8 @@
 package javawizards.surveywzrd.authabilities;
 
-import javawizards.surveywzrd.users.*;
+import javawizards.surveywzrd.users.AdministratorRepository;
+import javawizards.surveywzrd.users.AuthToken;
+import javawizards.surveywzrd.users.AuthTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

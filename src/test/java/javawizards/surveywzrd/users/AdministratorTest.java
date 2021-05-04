@@ -3,16 +3,17 @@ package javawizards.surveywzrd.users;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.reflect.Field;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.springframework.test.context.ActiveProfiles;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ActiveProfiles("test")
 class AdministratorTest {
 
     private Administrator administrator;
+
     @BeforeEach
     void setUp() {
         System.out.println("setUp");
@@ -51,62 +52,62 @@ class AdministratorTest {
         assertEquals(123l, field.get(pojo), "foo");
     }
 
-   /* @Test
-    void getFirstName() throws NoSuchFieldException, IllegalAccessException {
-        //given
-        final Administrator pojo = new Administrator();
-        final Field field = pojo.getClass().getDeclaredField("firstName");
-        field.setAccessible(true);
-        field.set(pojo, "test");
+    /* @Test
+     void getFirstName() throws NoSuchFieldException, IllegalAccessException {
+         //given
+         final Administrator pojo = new Administrator();
+         final Field field = pojo.getClass().getDeclaredField("firstName");
+         field.setAccessible(true);
+         field.set(pojo, "test");
 
-        //when
-        final String result = pojo.getFirstName();
+         //when
+         final String result = pojo.getFirstName();
 
-        //then
-        assertEquals("test", result, "magic_values");
-    }
+         //then
+         assertEquals("test", result, "magic_values");
+     }
 
-    @Test
-    void setFirstName() throws NoSuchFieldException, IllegalAccessException {
-        final Administrator pojo = new Administrator();
+     @Test
+     void setFirstName() throws NoSuchFieldException, IllegalAccessException {
+         final Administrator pojo = new Administrator();
 
-        //when
-        pojo.setFirstName("test");
+         //when
+         pojo.setFirstName("test");
 
-        //then
-        final Field field = pojo.getClass().getDeclaredField("firstName");
-        field.setAccessible(true);
-        assertEquals("test", field.get(pojo), "foo");
-    }
+         //then
+         final Field field = pojo.getClass().getDeclaredField("firstName");
+         field.setAccessible(true);
+         assertEquals("test", field.get(pojo), "foo");
+     }
 
-    @Test
-    void getLastName() throws NoSuchFieldException, IllegalAccessException {
-        //given
-        final Administrator pojo = new Administrator();
-        final Field field = pojo.getClass().getDeclaredField("lastName");
-        field.setAccessible(true);
-        field.set(pojo, "test");
+     @Test
+     void getLastName() throws NoSuchFieldException, IllegalAccessException {
+         //given
+         final Administrator pojo = new Administrator();
+         final Field field = pojo.getClass().getDeclaredField("lastName");
+         field.setAccessible(true);
+         field.set(pojo, "test");
 
-        //when
-        final String result = pojo.getLastName();
+         //when
+         final String result = pojo.getLastName();
 
-        //then
-        assertEquals("test", result, "magic_values");
-    }
+         //then
+         assertEquals("test", result, "magic_values");
+     }
 
-    @Test
-    void setLastName() throws NoSuchFieldException, IllegalAccessException {
-        final Administrator pojo = new Administrator();
+     @Test
+     void setLastName() throws NoSuchFieldException, IllegalAccessException {
+         final Administrator pojo = new Administrator();
 
-        //when
-        pojo.setLastName("test");
+         //when
+         pojo.setLastName("test");
 
-        //then
-        final Field field = pojo.getClass().getDeclaredField("lastName");
-        field.setAccessible(true);
-        assertEquals("test", field.get(pojo), "foo");
-    }
-*/
+         //then
+         final Field field = pojo.getClass().getDeclaredField("lastName");
+         field.setAccessible(true);
+         assertEquals("test", field.get(pojo), "foo");
+     }
+ */
     @Test
     void getEmail() throws NoSuchFieldException, IllegalAccessException {
         //given

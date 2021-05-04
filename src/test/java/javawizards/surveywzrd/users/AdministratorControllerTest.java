@@ -1,14 +1,11 @@
 package javawizards.surveywzrd.users;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javawizards.surveywzrd.surveys.SurveyWorkflowTest;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -42,7 +39,7 @@ public class AdministratorControllerTest {
 
     @Test
     void registrationWorksThroughAllLayers() throws Exception {
-        String email= "test@test.de";
+        String email = "test@test.de";
         Administrator user = new Administrator(email, "Test", true);
 
         mockMvc.perform(post("/api/administrator/public/register", 42L)
@@ -58,7 +55,7 @@ public class AdministratorControllerTest {
 
     @Test
     void loginWorksThroughAllLayers() throws Exception {
-        String email= "test@test.de";
+        String email = "test@test.de";
         Administrator user = new Administrator(email, "Test", true);
 
         mockMvc.perform(post("/api/administrator/public/login", 42L)
@@ -70,12 +67,12 @@ public class AdministratorControllerTest {
 
     @Test
     void logoutWorks() throws Exception {
-        String email= "test@test.de";
+        String email = "test@test.de";
         Administrator user = new Administrator(email, "Test", true);
 
         mockMvc.perform(delete("/api/administrator/logout")
                 .contentType("application/json")
-                .header("x-api-key",authTokenRepository.findByAdminId(1L).get().getAuthKey())
+                .header("x-api-key", authTokenRepository.findByAdminId(1L).get().getAuthKey())
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk());
         assertEquals(authTokenRepository.findByAdminId(1L), Optional.empty());
