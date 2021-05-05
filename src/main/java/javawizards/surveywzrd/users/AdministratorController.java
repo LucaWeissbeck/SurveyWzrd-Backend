@@ -2,6 +2,7 @@ package javawizards.surveywzrd.users;
 
 import javawizards.surveywzrd.exceptions.ForbiddenException;
 import javawizards.surveywzrd.exceptions.GeneralException;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -65,6 +66,11 @@ public class AdministratorController {
     @RequestMapping(value = "/public/register", method = RequestMethod.POST)
     public Administrator registerAdmin(@RequestBody Administrator administrator) {
         administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
+        String email = administrator.getEmail();
+        if (EmailValidator.getInstance().isValid(email) != true){
+            throw new ForbiddenException("Please fill in a valid email address");
+        }
+
         try {
             return administratorRepository.save(administrator);
 
@@ -75,7 +81,7 @@ public class AdministratorController {
 
     @RequestMapping(value = "/public/login", method = RequestMethod.POST)
     public LoginResult loginAdmin(@RequestBody Administrator administrator) {
-        if (administrator.getEmail() == null || administrator.getPassword() == null) {
+        if (administrator.getEmail() == "" || administrator.getPassword() == "") {
             throw new ForbiddenException("Please fill in username and password");
         }
 
