@@ -9,7 +9,8 @@ Developed by: Kathrin and Daniel
 Tested by: Mauritz, Kathrin and Daniel
 
 ## Local testing instructions
-Java 15 required or Docker image in the attached Dockerfile should be used.
+Java 15 required to run the program.
+The Docker image can also be used after you successfully built the jar file, or you use the pre built one from us.. 
 
 All the commands should be executed from the root folder of this project.
 You first have to potentially make the gradlew file executable with:
