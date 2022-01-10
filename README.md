@@ -10,10 +10,11 @@ Tested by: Mauritz, Kathrin and Daniel
 
 ## Local testing instructions
 Java 15 required to run the program.
-The Docker image can also be used after you successfully built the jar file, or you use the pre built one from us.. 
+You can run the application using the docker image (as descirbed below). Before building the docker image
+the jar file needs to be built.
 
 All the commands should be executed from the root folder of this project.
-You first have to potentially make the **gradlew file executable** with:
+You first have to potentially create the **gradlew file executable** with:
 ```
 chmod +x gradlew
 ```
