@@ -39,4 +39,4 @@ docker run -p8080:8080 surveywzrd
 Access with http://localhost:8080
 ## Database
 You can either fill in new Database information in the application.properties file or use the one we provide you with the source code.
-In case you want to create a new one, make sure the database exists and you can connect to it. On the first run, Hibernate will completely generate all tables for you.
+In case you want to create a new one, make sure the database exists and you can connect to it. On the first run, Hibernate will generate all tables for you.
